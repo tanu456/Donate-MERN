@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const http = require("http");
 
 const app = express();
-const port = 80;
+const port = 5000;
 
 // ENDPOINTS
 app.get("/", (req, res) => {
