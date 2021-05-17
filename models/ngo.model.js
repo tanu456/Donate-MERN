@@ -15,3 +15,5 @@ const NGOSchema = new mongooose.Schema({
     }
   },
 });
+
+module.exports = mongooose.model('NGOs', NGOSchema);
