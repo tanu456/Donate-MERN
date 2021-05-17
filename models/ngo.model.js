@@ -6,6 +6,7 @@ const NGOSchema = new mongooose.Schema({
   email: { type: String },
   phone_number: { type: String, required: true },
   ngo_images: { type: Array, default: [] },
+  address: { type: String },
   available_items: {
     clothes: {
       item_count: { type: Number, default: 0 }
