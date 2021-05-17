@@ -5,6 +5,7 @@ var path = require('path');
 var users = require('./users');
 
 
+// /api/v1/users  
 router.use('/users',users)
 
 
