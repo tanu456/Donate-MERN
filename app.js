@@ -8,7 +8,11 @@ const app = express();
 const port = 5000;
 
 require("./db"); // initializes database
-// ENDPOINTS
+
+// use router
+const indexRouter = require('./routes');
+app.use('/api/v1', indexRouter)
+
 app.get("/", (req, res) => {
     const params = {};
     res.end("Serve the frontend");
