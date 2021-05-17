@@ -14,6 +14,8 @@ const NGOSchema = new mongooose.Schema({
       item_count: { type: Number, default: 0 }
     }
   },
+}, {
+  timestamps: true,
 });
 
 module.exports = mongooose.model('NGOs', NGOSchema);
