@@ -14,11 +14,11 @@ const indexRouter = require('./routes');
 app.use('/api/v1', indexRouter)
 
 app.get("/", (req, res) => {
-    const params = {};
-    res.end("Serve the frontend");
+  const params = {};
+  res.end("Serve the frontend");
 });
 
 // START THE SERVER
 app.listen(port, () => {
-    console.log(`The application started successfully on port ${port}`);
+  console.log(`The application started successfully on port ${port}`);
 });
