@@ -9,4 +9,7 @@ router.get("/all", ngoController.getAllNgos);
 // /api/v1/ngos/:id
 router.get("/:id", ngoController.getNgoById);
 
+// /api/v1/ngos/:id
+router.delete("/:id", ngoController.deleteNgoById);
+
 module.exports = router;

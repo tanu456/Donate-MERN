@@ -43,3 +43,16 @@ exports.getNgosByLocation = async (req, res, next) => {
     });
   }
 };
+
+exports.deleteNgoById = async (req, res, next) => {
+  try {
+    await NGOs.remove({ _id: req.params.id });
+    res.status(200).send({
+      message: "NGO successfully deleted.",
+    });
+  } catch (err) {
+    res.status(500).send({
+      message: err.message || "Some error occured while deleting entry.",
+    });
+  }
+};
