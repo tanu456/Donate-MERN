@@ -9,4 +9,5 @@ router.get("/get", userController.getUsersByQuery);
 router.put("/:id", userController.editUser);
 router.delete("/:id", userController.deleteUser);
 
+
 module.exports = router;
