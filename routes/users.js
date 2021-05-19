@@ -6,4 +6,9 @@ var userController = require("../controllers/user.controller");
 // /api/v1/users/all
 router.get("/all", userController.getAllUsers);
 
+
+
+// /api/v1/users/request
+router.get("/request",userController.request);
+
 module.exports = router;
