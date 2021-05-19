@@ -12,7 +12,7 @@ const RequestSchema = new mongoose.Schema(
       books: {
         type: Boolean,
       },
-    }
+    },
   },
   {
     timestamps: true,
