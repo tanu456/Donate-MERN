@@ -12,4 +12,10 @@ router.get("/:id", ngoController.getNgoById);
 // /api/v1/ngos/:id
 router.delete("/:id", ngoController.deleteNgoById);
 
+// /api/v1/ngos/create
+router.post("/create", ngoController.createNgo);
+
+// /api/v1/ngos/:id
+router.put("/:id", ngoController.editNgo);
+
 module.exports = router;

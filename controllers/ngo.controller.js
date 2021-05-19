@@ -56,3 +56,28 @@ exports.deleteNgoById = async (req, res, next) => {
     });
   }
 };
+
+exports.createNgo = async (req, res, next) => {
+  try {
+    const ngo = await NGOs.insertOne(req.body);
+    res.status(200).send(ngo);
+  } catch (err) {
+    res.status(500).send({
+      message: err.message || "Some error occurred while processing your request",
+    });
+  }
+};
+
+exports.editNgo = async (req, res, next) => {
+  var ngo = null;
+  const filter = { _id: req.params.id };
+  const changes = req.body;
+  try{
+    ngo = await NGOs.updateOne(filter, changes);
+    res.status(200).send(users);
+  } catch (err) {
+    res.status(500).send({
+      message: err.message || "Some error occurred while processing your request",
+    });
+  }
+};
