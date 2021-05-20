@@ -34,7 +34,7 @@ try {
 
 // Successfully Connected
 mongoose.connection.on("connected", () => {
-  console.log("Mongoose defalult connection open to " + dbURI);
+  console.log("Mongoose default connection open to " + dbURI);
 });
 
 // If the connection thorows an error

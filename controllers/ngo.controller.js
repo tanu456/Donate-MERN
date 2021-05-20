@@ -86,12 +86,11 @@ exports.createNgo = async (req, res, next) => {
 };
 
 exports.editNgo = async (req, res, next) => {
-  var ngo = null;
   const filter = { _id: req.params.id };
   const changes = req.body;
   try{
-    ngo = await NGOs.updateOne(filter, changes);
-    res.status(200).send(users);
+    const ngo = await NGOs.updateOne(filter, changes);
+    res.status(200).send(ngo);
   } catch (err) {
     res.status(500).send({
       message: err.message || "Some error occurred while processing your request",

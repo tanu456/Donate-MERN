@@ -1,17 +1,8 @@
-var express = require("express");
-var router = express.Router();
-var path = require("path");
+const express = require("express");
+const router = express.Router();
 
-var users = require("./users");
-
-// /api/v1/users
-router.use("/users", users);
-var express = require("express");
-var router = express.Router();
-var path = require("path");
-
-var users = require("./users");
-var ngos = require("./ngos");
+const users = require("./users");
+const ngos = require("./ngos");
 
 // /api/v1/users
 router.use("/users", users);
@@ -20,4 +11,3 @@ router.use("/users", users);
 router.use("/ngos", ngos);
 
 module.exports = router;
-
