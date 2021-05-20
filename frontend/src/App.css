@@ -7,3 +7,87 @@ body {
   font-family: Mulish;
 }
 
+/* HOME-IMAGE */
+
+.header-image {
+  width: 75%;
+  border-radius: 12%;
+}
+
+/* ANIMATIONS */
+
+#header .animated {
+  animation: up-down 2s ease-in-out infinite alternate-reverse both;
+}
+
+@-webkit-keyframes up-down {
+  0% {
+    transform: translateY(10px);
+  }
+  100% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes up-down {
+  0% {
+    transform: translateY(10px);
+  }
+  100% {
+    transform: translateY(-10px);
+  }
+}
+
+/* BUTTONS */
+
+#header .btn-get-started {
+  font-weight: 500;
+  font-size: 1.3rem;
+  letter-spacing: 1px;
+  display: inline-block;
+  padding: 10px 30px;
+  border-radius: 50px;
+  transition: 0.5s;
+  color: #FFC93C;
+  border: 2px solid #FFC93C;
+  text-decoration: none;
+}
+
+#header .btn-get-started:hover {
+  background: #FFC93C;
+  color: #fff;
+}
+
+/* FOOTER PART */
+
+#footer {
+  background-color: #dbf6e9;
+  color: #FFC93C;
+}
+
+
+#footer h3 {
+  font-weight: bold;
+}
+
+#footer ul li{
+  list-style-type: none;
+}
+
+#footer .social-icon {
+  color: #FFC93C;
+}
+
+#footer .social-icon:hover {
+  border-bottom: 1px solid dodgerblue;
+}
+
+#footer .footer-nav {
+  text-decoration: none;
+  font-size: 1.2rem;
+  color: #FFC93C;
+}
+
+#footer .footer-nav:hover {
+  border-bottom: 1px solid dodgerblue;
+}
