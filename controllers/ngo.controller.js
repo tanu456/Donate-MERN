@@ -58,9 +58,26 @@ exports.deleteNgoById = async (req, res, next) => {
 };
 
 exports.createNgo = async (req, res, next) => {
+  console.log(req.body);
+  var ngo = new NGOs({
+    name: req.body.name,
+    username: req.body.username,
+    password: req.body.password,
+    city: req.body.city,
+    email: req.body.email,
+    phone_number: req.body.phone_number,
+    ngo_images: req.body.ngo_images,
+    address: req.body.address,
+    available: req.body.available,
+    available_items: req.body.available_items
+  });
   try {
-    const ngo = await NGOs.insertOne(req.body);
-    res.status(200).send(ngo);
+    ngo = await ngo.save();
+    console.log(ngo);
+    res.status(200).send({
+      message: "NGO created Successfully",
+      ngo,
+    });
   } catch (err) {
     res.status(500).send({
       message: err.message || "Some error occurred while processing your request",
