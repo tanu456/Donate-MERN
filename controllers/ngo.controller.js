@@ -1,4 +1,5 @@
 const NGOs = require("../models/ngo.model");
+const bcrypt = require("bcryptjs");
 
 exports.getAllNgos = async (req, res, next) => {
   try {
@@ -36,22 +37,40 @@ exports.deleteNgoById = async (req, res, next) => {
 };
 
 exports.createNgo = async (req, res, next) => {
-  console.log(req.body);
+  
+  const ngo_info = req.body;
+  if ( 
+    !ngo_info ||
+    !ngo_info.name ||
+    !ngo_info.username ||
+    !ngo_info.password ||
+    !ngo_info.city ||
+    !ngo_info.phone_number ||
+    !ngo_info.available
+  ) {
+    return res.status(404).json({
+      success: false,
+      message: "Please enter all required fields.",
+    });
+  }
+
+  //hashing password
+  ngo_info.password = bcrypt.hashSync(ngo_info.password, 10);
+
   var ngo = new NGOs({
-    name: req.body.name,
-    username: req.body.username,
-    password: req.body.password,
-    city: req.body.city,
-    email: req.body.email,
-    phone_number: req.body.phone_number,
-    ngo_images: req.body.ngo_images,
-    address: req.body.address,
-    available: req.body.available,
-    available_items: req.body.available_items
+    name: ngo_info.name,
+    username: ngo_info.username,
+    password: ngo_info.password,
+    city: ngo_info.city,
+    email: ngo_info.email,
+    phone_number: ngo_info.phone_number,
+    ngo_images: ngo_info.ngo_images,
+    address: ngo_info.address,
+    available: ngo_info.available,
+    available_items: ngo_info.available_items
   });
   try {
     ngo = await ngo.save();
-    console.log(ngo);
     res.status(200).send({
       message: "NGO created Successfully",
       ngo,
@@ -75,3 +94,19 @@ exports.editNgo = async (req, res, next) => {
     });
   }
 };
+
+exports.login = async (req, res) => {
+  const { username, password } = req.body;
+  const ngo = await NGOs.findOne({ username }).lean();
+
+  if(!ngo) {
+    return res.json({ status: "error", error: "Invalid username" });
+  }
+
+  if(await bcrypt.compare(password, ngo.password)) {
+    //the username,password combination is successfull
+    return res.json({ status: "ok", message: "Successfully logged in"});
+  }
+  
+  return res.json({ status: "error", error: "Invalid password"});
+}

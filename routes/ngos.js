@@ -18,4 +18,7 @@ router.post("/create", ngoController.createNgo);
 // /api/v1/ngos/:id
 router.put("/:id", ngoController.editNgo);
 
+// /api/v1/ngos/login
+router.post("/login", ngoController.login);
+
 module.exports = router;
