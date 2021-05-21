@@ -8,7 +8,7 @@ const UserSchema = new mongoose.Schema(
     city: { type: String, required: true },
     email: { type: String },
     phone_number: { type: String, required: true },
-    donated_items: { type: Map, of: Number },
+    donations: { type: Array, default: [] },
     aadhar_number: { type: String, required: true },
     is_Verified: { type: Boolean, default: false },
     email_token: { type: String },

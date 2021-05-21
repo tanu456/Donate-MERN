@@ -1,0 +1,108 @@
+const NGOs = require("../models/ngo.model");
+const bcrypt = require("bcryptjs");
+
+exports.getAllNgos = async (req, res, next) => {
+  try {
+    const ngos = await NGOs.find({});
+    res.status(200).send(ngos);
+  } catch (err) {
+    res.status(500).send({
+      message: err.message || "Some error occurred while retrieving entries.",
+    });
+  }
+};
+
+exports.getNgoByQuery = async (req, res, next) => {
+  try {
+    const ngo = await NGOs.findOne(req.query);
+    res.status(200).send(ngo);
+  } catch (err) {
+    res.status(500).send({
+      message: err.message || "Some error occured while retrieving entry.",
+    });
+  }
+};
+
+exports.deleteNgoById = async (req, res, next) => {
+  try {
+    await NGOs.remove({ _id: req.params.id });
+    res.status(200).send({
+      message: "NGO successfully deleted.",
+    });
+  } catch (err) {
+    res.status(500).send({
+      message: err.message || "Some error occured while deleting entry.",
+    });
+  }
+};
+
+exports.createNgo = async (req, res, next) => {
+  const ngo_info = req.body;
+  if ( 
+    !ngo_info ||
+    !ngo_info.name ||
+    !ngo_info.username ||
+    !ngo_info.password ||
+    !ngo_info.city ||
+    !ngo_info.phone_number
+  ) {
+    return res.status(404).json({
+      success: false,
+      message: "Please enter all required fields.",
+    });
+  }
+
+  //hashing password
+  ngo_info.password = bcrypt.hashSync(ngo_info.password, 10);
+
+  const ngo = new NGOs({
+    name: ngo_info.name,
+    username: ngo_info.username,
+    password: ngo_info.password,
+    city: ngo_info.city,
+    email: ngo_info.email,
+    phone_number: ngo_info.phone_number,
+    ngo_images: ngo_info.ngo_images,
+    address: ngo_info.address,
+    available: ngo_info.available,
+    available_items: ngo_info.available_items
+  });
+  try {
+    ngo = await ngo.save();
+    res.status(200).send({
+      message: "NGO created Successfully",
+      ngo,
+    });
+  } catch (err) {
+    res.status(500).send({
+      message: err.message || "Some error occurred while processing your request",
+    });
+  }
+};
+
+exports.editNgo = async (req, res, next) => {
+  const filter = { _id: req.params.id };
+  const changes = req.body;
+  try{
+    const ngo = await NGOs.updateOne(filter, changes);
+    res.status(200).send(ngo);
+  } catch (err) {
+    res.status(500).send({
+      message: err.message || "Some error occurred while processing your request",
+    });
+  }
+};
+
+exports.login = async (req, res) => {
+  const { username, password } = req.body;
+  const ngo = await NGOs.findOne({ username }).lean();
+
+  if(!ngo) {
+    return res.json({ status: "error", error: "Invalid username" });
+  }
+  if(await bcrypt.compare(password, ngo.password)) {
+    //the username,password combination is successfull
+    return res.json({ status: "ok", message: "Successfully logged in"});
+  }
+  return res.json({ status: "error", error: "Invalid password"});
+}
