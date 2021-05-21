@@ -91,3 +91,11 @@ body {
 #footer .footer-nav:hover {
   border-bottom: 1px solid dodgerblue;
 }
+
+
+/* {CONTACT AREA} */
+
+.contact {
+  border: 1px solid #000;
+  box-shadow: 5px 5px 10px 2px #000;
+}

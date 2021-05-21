@@ -10,6 +10,7 @@ import Cases from "./components/Cases";
 import Ngo from "./components/Ngo";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
+import Signup from "./components/Signup";
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
         <Route exact path="/cases" render={() => <Cases />} />
         <Route exact path="/ngo" render={() => <Ngo />} />
         <Route exact path="/contact" render={() => <Contact />} />
+        <Route exact path="/signup" render={() => <Signup />} />
         <Redirect to="/" />
       </Switch>
       <Footer />

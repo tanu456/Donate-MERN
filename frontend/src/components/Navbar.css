@@ -12,10 +12,24 @@
 }
 
 .navbar a:hover {
+    transform: translateY(5px);
     color: #FFC93C !important;
 }
 
 .active-link {
     font-weight: bold;
     border-bottom: 1px solid #FFC93C;
+}
+
+.sign-button {
+    font-weight: 500;
+  font-size: 1.3rem;
+  letter-spacing: 1px;
+  display: inline-block;
+  padding: 5px 20px;
+  border-radius: 50px;
+  transition: 0.5s;
+  color: #FFC93C;
+  border: 2px solid #FFC93C;
+  text-decoration: none;
 }

@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 /* eslint-disable jsx-a11y/alt-text */
 import React from "react";
-import homeImg from "./images/—Pngtree—cute cartoon charity dedication_4975019.png";
+import homeImg from "./images/Homeimage.png";
 import { NavLink } from "react-router-dom";
 
 const Home = () => {
@@ -12,7 +12,7 @@ const Home = () => {
           <div className="row">
             <div className="col mx-auto">
               <div className="row">
-                <div className="col-md-6 pt-5 pt-lg-0 order-2 order-lg-1 d-flex flex-column justify-content-center align-items-center">
+                <div className="col-md-6 pt-5 pt-lg-0 order-2 order-lg-1 d-flex flex-column align-items-center justify-content-center align-items-center">
                   <h1 className="home-main-line">
                     Support a causes you care about
                   </h1>

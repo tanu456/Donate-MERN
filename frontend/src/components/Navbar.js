@@ -1,6 +1,7 @@
 import React from "react";
 import "./Navbar.css";
 import { NavLink } from "react-router-dom";
+import Signup from "./Signup";
 
 const Navbar = () => {
   return (
@@ -82,6 +83,13 @@ const Navbar = () => {
                         Contact Us
                       </NavLink>
                     </li>
+                    <NavLink
+                      exact
+                      to="/signup"
+                      className="btn btn-md sign-button"
+                    >
+                      Sign up
+                    </NavLink>
                   </ul>
                 </div>
               </div>
