@@ -37,7 +37,6 @@ exports.deleteNgoById = async (req, res, next) => {
 };
 
 exports.createNgo = async (req, res, next) => {
-  
   const ngo_info = req.body;
   if ( 
     !ngo_info ||
@@ -45,8 +44,7 @@ exports.createNgo = async (req, res, next) => {
     !ngo_info.username ||
     !ngo_info.password ||
     !ngo_info.city ||
-    !ngo_info.phone_number ||
-    !ngo_info.available
+    !ngo_info.phone_number
   ) {
     return res.status(404).json({
       success: false,
@@ -57,7 +55,7 @@ exports.createNgo = async (req, res, next) => {
   //hashing password
   ngo_info.password = bcrypt.hashSync(ngo_info.password, 10);
 
-  var ngo = new NGOs({
+  const ngo = new NGOs({
     name: ngo_info.name,
     username: ngo_info.username,
     password: ngo_info.password,
@@ -102,11 +100,9 @@ exports.login = async (req, res) => {
   if(!ngo) {
     return res.json({ status: "error", error: "Invalid username" });
   }
-
   if(await bcrypt.compare(password, ngo.password)) {
     //the username,password combination is successfull
     return res.json({ status: "ok", message: "Successfully logged in"});
   }
-  
   return res.json({ status: "error", error: "Invalid password"});
 }
