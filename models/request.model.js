@@ -13,6 +13,7 @@ const RequestSchema = new mongoose.Schema(
         type: Boolean,
       },
     },
+    current_state: { type: String, default: "CREATED" },
   },
   {
     timestamps: true,

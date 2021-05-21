@@ -3,11 +3,11 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
 const bodyParser = require("body-parser");
-require('dotenv').config();
-const sgMail = require('@sendgrid/mail');
+require("dotenv").config();
+const sgMail = require("@sendgrid/mail");
 
 //Make account on sendgrid and creat api key and add in env file and verify sender
-sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 // @desc    Get all users
 // @route   GET /api/v1/users/all
@@ -86,12 +86,10 @@ exports.register = async (req, res) => {
     //Email should be unique
     const user = await Users.findOne({ email: personal_info.email });
     if (user)
-      return res
-        .status(401)
-        .json({
-          message:
-            "The email address you have entered is already associated with another account.",
-        });
+      return res.status(401).json({
+        message:
+          "The email address you have entered is already associated with another account.",
+      });
 
     //hashing password
     personal_info.password = bcrypt.hashSync(personal_info.password, 10);
