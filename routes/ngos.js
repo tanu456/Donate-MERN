@@ -7,7 +7,7 @@ var ngoController = require("../controllers/ngo.controller");
 router.get("/all", ngoController.getAllNgos);
 
 // /api/v1/ngos/:id
-router.get("/:id", ngoController.getNgoById);
+router.get("/get", ngoController.getNgoByQuery);
 
 // /api/v1/ngos/:id
 router.delete("/:id", ngoController.deleteNgoById);
