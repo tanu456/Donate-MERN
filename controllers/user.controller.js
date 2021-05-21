@@ -106,7 +106,7 @@ exports.register = async (req, res) => {
       password: personal_info.password,
       city: personal_info.city,
       email: personal_info.email,
-      emailtoken: token,
+      email_token: token,
       phone_number: personal_info.phone_number,
       donated_items: personal_info.donated_items,
       aadhar_number: personal_info.aadhar_number,
@@ -148,7 +148,7 @@ exports.login = async (req, res) => {
 
   if (await bcrypt.compare(password, user.password)) {
     // the username, password combination is successful
-    if (!user.isVerified) {
+    if (!user.is_Verified) {
       return res.status(401).json({
         type: "not-verified",
         message: "Your account has not been verified.",
@@ -179,9 +179,9 @@ exports.verify = async (req, res) => {
       .json({ message: "We were unable to find a user for this token." });
 
   try {
-    const user = await Users.findOne({ emailtoken: token });
+    const user = await Users.findOne({ email_token: token });
     if (!user) return res.status(404).send("No user found.");
-    user.isVerified = true;
+    user.is_Verified = true;
     await user.save();
     console.log(user);
     res.status(200).send("Verified Successfully");
