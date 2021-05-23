@@ -1,14 +1,13 @@
 import React from "react";
 import "./Navbar.css";
 import { NavLink } from "react-router-dom";
-import Signup from "./Signup";
 
 const Navbar = () => {
   return (
     <>
       <div className="container-fluid">
         <div className="row">
-          <div className="col">
+          <div className="col pe-0 ps-0">
             <nav className="navbar navbar-expand-lg navbar-light">
               <div className="container-fluid">
                 {/* LOGO */}
@@ -27,7 +26,7 @@ const Navbar = () => {
                   <span className="navbar-toggler-icon"></span>
                 </button>
                 <div
-                  className="collapse navbar-collapse"
+                  className="collapse navbar-collapse navigations"
                   id="navbarSupportedContent"
                 >
                   {/* NAVITEMS */}
@@ -83,13 +82,42 @@ const Navbar = () => {
                         Contact Us
                       </NavLink>
                     </li>
-                    <NavLink
-                      exact
-                      to="/signup"
-                      className="btn btn-md sign-button"
-                    >
-                      Sign up
-                    </NavLink>
+                    <li className="nav-item dropdown">
+                      <NavLink
+                        className="nav-link dropdown-toggle"
+                        to="/"
+                        id="navbarDropdown"
+                        role="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                      >
+                        Signup
+                      </NavLink>
+                      <ul
+                        className="dropdown-menu"
+                        aria-labelledby="navbarDropdown"
+                      >
+                        <li>
+                          <NavLink
+                            className="dropdown-item dropdown-link"
+                            to="/signup"
+                          >
+                            User Signup
+                          </NavLink>
+                        </li>
+                        <li>
+                          <hr className="dropdown-divider" />
+                        </li>
+                        <li>
+                          <NavLink
+                            className="dropdown-item dropdown-link"
+                            to="/ngosignup"
+                          >
+                            NGO Signup
+                          </NavLink>
+                        </li>
+                      </ul>
+                    </li>
                   </ul>
                 </div>
               </div>

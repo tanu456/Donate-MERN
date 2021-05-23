@@ -1,16 +1,15 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 
-function Signup() {
+function Ngosignup() {
   const [item, setItem] = useState({
-    fName: "",
-    lName: "",
+    name: "",
     email: "",
+    phoneNumber: "",
+    registerationNumber: "",
+    address: "",
     password: "",
     confirmPassword: "",
-    address: "",
-    phoneNumber: "",
   });
 
   const formSubmit = (e) => {
@@ -26,38 +25,37 @@ function Signup() {
       };
     });
   };
-
   return (
     <>
       <div className="container-fluid">
         <div className="row">
-          <div className="col-lg-5 col-md-5 col-sm-5 mt-5 mx-auto login-container">
+          <div className="col-lg-5 col-md-7 col-sm-5 mt-5 mx-auto login-container">
             <h1 className="mt-3 font-weight-bold text-center">Register</h1>
             <form className="mt-4" onSubmit={formSubmit}>
               <div class="mb-3">
                 <label for="" class="form-label">
-                  First Name
+                  NGO Name
                 </label>
                 <input
                   type="text"
                   class="form-control"
-                  id="firstName"
-                  placeholder="Enter your First Name"
-                  name="fName"
+                  id="name"
+                  placeholder="Enter the Organisation Name"
+                  name="name"
                   value={item}
                 />
               </div>
 
               <div class="mb-3">
                 <label for="" class="form-label">
-                  Last Name
+                  Enter your Phone Number
                 </label>
                 <input
                   type="text"
                   class="form-control"
-                  id="lastName"
-                  placeholder="Enter your Last Name"
-                  name="lName"
+                  id="phNumber"
+                  placeholder="Enter your Phone Number"
+                  name="phoneNumber"
                   value={item}
                 />
               </div>
@@ -78,14 +76,14 @@ function Signup() {
 
               <div class="mb-3">
                 <label for="" class="form-label">
-                  Enter your Phone Number
+                  NGO Registeration Number
                 </label>
                 <input
                   type="text"
                   class="form-control"
-                  id="phoneNumber"
-                  placeholder="Enter your Phone Number"
-                  name="phone"
+                  id="regName"
+                  placeholder="Enter your NGO Registeration Number"
+                  name="registerationNumber"
                   value={item}
                 />
               </div>
@@ -117,7 +115,6 @@ function Signup() {
                   value={item}
                 />
               </div>
-
               <div class="mb-3">
                 <label for="" class="form-label">
                   Confirm Password
@@ -131,7 +128,6 @@ function Signup() {
                   value={item}
                 />
               </div>
-
               <div class="d-grid gap-2 mx-auto">
                 <button
                   class="btn btn-dark btn-lg mt-3"
@@ -152,4 +148,4 @@ function Signup() {
   );
 }
 
-export default Signup;
+export default Ngosignup;

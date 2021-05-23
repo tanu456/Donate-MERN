@@ -55,7 +55,7 @@ const Footer = () => {
             <h3>Navigation</h3>
             <div className="d-flex flex-column justify-content-center">
               <div>
-                <NavLink className="footer-nav p-2" to="/">
+                <NavLink className="footer-nav m-5" to="/">
                   Home
                 </NavLink>
               </div>

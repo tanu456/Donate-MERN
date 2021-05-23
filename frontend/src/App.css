@@ -4,6 +4,7 @@ body {
   margin: 0;
   padding: 0;
   width: 100%;
+  box-sizing: border-box;
   font-family: Mulish;
 }
 
@@ -48,21 +49,21 @@ body {
   padding: 10px 30px;
   border-radius: 50px;
   transition: 0.5s;
-  color: #FFC93C;
-  border: 2px solid #FFC93C;
+  color: #021E39;
+  border: 2px solid #021E39;
   text-decoration: none;
 }
 
 #header .btn-get-started:hover {
-  background: #FFC93C;
+  background: #021E39;
   color: #fff;
 }
 
 /* FOOTER PART */
 
 #footer {
-  background-color: #dbf6e9;
-  color: #FFC93C;
+  background-color: #021E39;
+  color: #FFF;
 }
 
 
@@ -75,21 +76,21 @@ body {
 }
 
 #footer .social-icon {
-  color: #FFC93C;
+  color: #FFF;
 }
 
 #footer .social-icon:hover {
-  border-bottom: 1px solid dodgerblue;
+  border-bottom: 1px solid #FFF;
 }
 
 #footer .footer-nav {
   text-decoration: none;
   font-size: 1.2rem;
-  color: #FFC93C;
+  color: #FFF;
 }
 
 #footer .footer-nav:hover {
-  border-bottom: 1px solid dodgerblue;
+  border-bottom: 1px solid #FFF;
 }
 
 
@@ -98,4 +99,14 @@ body {
 .contact {
   border: 1px solid #000;
   box-shadow: 5px 5px 10px 2px #000;
+}
+
+
+/* {LOGIN PAGE} */
+
+.login-container {
+  border: 1px solid #000;
+  border-radius: 15px;
+  box-shadow: 5px 5px 15px 2px #000;
+  padding: 0 45px;
 }

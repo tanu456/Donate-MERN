@@ -1,35 +1,36 @@
 .navbar {
-    background-color: #dbf6e9 !important;
+    background-color: #021E39 !important;
+    color: #FFF;
+    /* padding: 0px 0px; */
 }
 
 .navbar-brand {
     font-size: 1.5rem;
 }
 
+.navigations {
+    margin-right: 5%;
+}
+
 .navbar a {
     font-size: 1.3rem;
+    color: #FFF !important;
     text-transform: capitalize;
 }
 
 .navbar a:hover {
     transform: translateY(5px);
-    color: #FFC93C !important;
 }
 
 .active-link {
     font-weight: bold;
-    border-bottom: 1px solid #FFC93C;
+    border-bottom: 1px solid #FFF;
 }
 
-.sign-button {
-    font-weight: 500;
-  font-size: 1.3rem;
-  letter-spacing: 1px;
-  display: inline-block;
-  padding: 5px 20px;
-  border-radius: 50px;
-  transition: 0.5s;
-  color: #FFC93C;
-  border: 2px solid #FFC93C;
-  text-decoration: none;
+.dropdown-menu a {
+    color: #000 !important;
+}
+
+.navbar-toggler {
+    color: #FFF !important;
 }
