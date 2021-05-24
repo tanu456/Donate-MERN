@@ -41,7 +41,6 @@ exports.createNgo = async (req, res, next) => {
   if ( 
     !ngo_info ||
     !ngo_info.name ||
-    !ngo_info.username ||
     !ngo_info.password ||
     !ngo_info.city ||
     !ngo_info.phone_number
@@ -55,7 +54,7 @@ exports.createNgo = async (req, res, next) => {
   //hashing password
   ngo_info.password = bcrypt.hashSync(ngo_info.password, 10);
 
-  const ngo = new NGOs({
+  var ngo = new NGOs({
     name: ngo_info.name,
     username: ngo_info.username,
     password: ngo_info.password,
@@ -69,6 +68,7 @@ exports.createNgo = async (req, res, next) => {
   });
   try {
     ngo = await ngo.save();
+  
     res.status(200).send({
       message: "NGO created Successfully",
       ngo,

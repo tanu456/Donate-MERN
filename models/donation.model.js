@@ -1,6 +1,6 @@
-const mongooose = require('mongoose');
+const mongoose = require('mongoose');
 
-const DonationSchema = new mongooose.Schema({
+const DonationSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   ngo: { type: mongoose.Schema.Types.ObjectId, ref: "NGOs" },
   address: { type: String, require: true },
@@ -14,4 +14,4 @@ const DonationSchema = new mongooose.Schema({
   timestamps: true,
 });
 
-module.exports = mongooose.model('Donations', DonationSchema);
+module.exports = mongoose.model('Donations', DonationSchema);
