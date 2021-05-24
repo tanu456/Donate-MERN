@@ -10,7 +10,7 @@ const UserSchema = new mongoose.Schema(
     phone_number: { type: String, required: true },
     donations: { type: Array, default: [] },
     aadhar_number: { type: String, required: true },
-    is_Verified: { type: Boolean, default: false },
+    is_verified: { type: Boolean, default: false },
     email_token: { type: String },
   },
   {
