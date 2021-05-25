@@ -69,6 +69,7 @@ exports.createNgo = async (req, res, next) => {
   });
   try {
     ngo = await ngo.save();
+  
     res.status(200).send({
       message: "NGO created Successfully",
       ngo,
