@@ -1,4 +1,4 @@
-const Request = require("../models/request.model");
+const Request = require("../models/donation.model");
 
 // @desc    Request for donate
 // @route   POST /api/v1/request
@@ -6,7 +6,10 @@ exports.request = async (req, res, next) => {
   var request = new Request({
     user: req.body.user,
     ngo: req.body.ngo,
-    address: req.body.address,
+    location: req.body.location,
+    current_state: req.body.current_state,
+    item_images: req.body.item_images,
+    pickup_person: req.body.pickup_person,
     items: req.body.items,
   });
 
@@ -31,16 +34,16 @@ exports.requestCancel = async (req, res, next) => {
   try {
     request = await Request.updateOne(
       { _id: req.params.id },
-      { $set: { current_state: "CANCELED" } }
+      { $set: { current_state: "CANCELLED" } }
     );
 
     res.status(200).send({
-      message: "Request Canceled Successfully",
+      message: "Request Cancelled Successfully",
       request,
     });
   } catch (err) {
     res.status(500).send({
-      message: err.message || "Some error occurred while retrieving entries.",
+      message: err.message || "Some error occurred while processing your request.",
     });
   }
 };
