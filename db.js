@@ -7,6 +7,7 @@ const dbURI = `mongodb+srv://${db.user}:${encodeURIComponent(db.password)}@${
   db.host
 }/${db.name}`;
 
+
 const options = {
   useNewUrlParser: true,
   useCreateIndex: true,

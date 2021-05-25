@@ -1,16 +1,25 @@
-const mongooose = require('mongoose');
+const mongoose = require('mongoose');
 
-const DonationSchema = new mongooose.Schema({
-  donor: { type: mongooose.ObjectId, required: true },
-  ngo: { type: mongooose.ObjectId, required: true },
-  isDelivered: { type: Boolean, default: false },
+const DonationSchema = new mongoose.Schema({
+  user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+  ngo: { type: mongoose.Schema.Types.ObjectId, ref: "NGOs" },
+  location: {
+    address: { type: String },
+    city: { type: String },
+    pin_code: { type: Number },
+    lattitude: { type: String },
+    longitude: { type: String },
+  },
+  current_state: { type: String, default: "CREATED" },
   item_images: { type: Array },
-  items: {
+  pickup_person: { type: String },
+  items: [{
     category: { type: String, required: true },
     item_count: { type: Number, default: 0 }
-  },
+  }],
 }, {
   timestamps: true,
 });
 
-module.exports = mongooose.model('Donations', DonationSchema);
+module.exports = mongoose.model('Donations', DonationSchema);
+
