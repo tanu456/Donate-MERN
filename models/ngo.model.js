@@ -1,14 +1,19 @@
-const mongooose = require('mongoose');
+const mongoose = require('mongoose');
 
-const NGOSchema = new mongooose.Schema({
+const NGOSchema = new mongoose.Schema({
   name: { type: String, required: true },
   password: { type: String, required: true },
-  city: { type: String, required: true },
-  email: { type: String, required: true },
-  phone_number: { type: String, required: true },
-  registration_number: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
+  phone_number: { type: String, required: true, unique: true },
+  registration_number: { type: String, required: true, unique: true },
   ngo_images: { type: Array },
-  address: { type: String },
+  location: {
+    address: { type: String, required: true },
+    city: { type: String, required: true },
+    pin_code: { type: Number, required: true },
+    latitude: { type: String },
+    longitude: { type: String },
+  },
   is_available: { type: Boolean, required: true, default: true },
   available_items: [{
     category: { type: String, required: true },
@@ -18,4 +23,5 @@ const NGOSchema = new mongooose.Schema({
   timestamps: true,
 });
 
-module.exports = mongooose.model('NGOs', NGOSchema);
+module.exports = mongoose.model('NGOs', NGOSchema);
+

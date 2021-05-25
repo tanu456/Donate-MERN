@@ -42,8 +42,9 @@ exports.createNgo = async (req, res, next) => {
     !ngo_info ||
     !ngo_info.name ||
     !ngo_info.password ||
-    !ngo_info.city ||
-    !ngo_info.phone_number
+    !ngo_info.email ||
+    !ngo_info.phone_number ||
+    !ngo_info.registration_number 
   ) {
     return res.status(404).json({
       success: false,
@@ -56,14 +57,14 @@ exports.createNgo = async (req, res, next) => {
 
   var ngo = new NGOs({
     name: ngo_info.name,
-    username: ngo_info.username,
     password: ngo_info.password,
-    city: ngo_info.city,
     email: ngo_info.email,
     phone_number: ngo_info.phone_number,
+    registration_number: ngo_info.registration_number,
     ngo_images: ngo_info.ngo_images,
+    location: ngo_info.location,
     address: ngo_info.address,
-    available: ngo_info.available,
+    is_available: ngo_info.is_available,
     available_items: ngo_info.available_items
   });
   try {
@@ -94,11 +95,11 @@ exports.editNgo = async (req, res, next) => {
 };
 
 exports.login = async (req, res) => {
-  const { username, password } = req.body;
-  const ngo = await NGOs.findOne({ username }).lean();
+  const { email, password } = req.body;
+  const ngo = await NGOs.findOne({ email }).lean();
 
   if(!ngo) {
-    return res.json({ status: "error", error: "Invalid username" });
+    return res.json({ status: "error", error: "Invalid email-id" });
   }
   if(await bcrypt.compare(password, ngo.password)) {
     //the username,password combination is successfull

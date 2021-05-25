@@ -13,15 +13,17 @@ exports.request = async (req, res, next) => {
   const user =await Users.findOne({username : req.body.username});
   const ngo = await NGOs.findOne({name : req.body.ngo})
   
-  var request = new Request(
-    {
-      user: user._id,
-      ngo: ngo._id,
-      address: req.body.address,
-      items: req.body.items,
-    }
-  );
+  var request = new Request({
+    user: req.body.user,
+    ngo: req.body.ngo,
+    location: req.body.location,
+    current_state: req.body.current_state,
+    item_images: req.body.item_images,
+    pickup_person: req.body.pickup_person,
+    items: req.body.items,
+  });
   console.log(request);
+
   try {
     
     request = await request.save();
@@ -55,16 +57,16 @@ exports.requestCancel = async (req, res, next) => {
   try {
     request = await Request.updateOne(
       { _id: req.params.id },
-      { $set: { current_state: "CANCELED" } }
+      { $set: { current_state: "CANCELLED" } }
     );
 
     res.status(200).send({
-      message: "Request Canceled Successfully",
+      message: "Request Cancelled Successfully",
       request,
     });
   } catch (err) {
     res.status(500).send({
-      message: err.message || "Some error occurred while retrieving entries.",
+      message: err.message || "Some error occurred while processing your request.",
     });
   }
 };
