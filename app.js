@@ -11,8 +11,7 @@ const morgan = require("morgan");
 
 // create a write stream (in append mode)
 var accessLogStream = fs.createWriteStream(
-  path.join(__dirname, "logs", "access.log"),
-  { flags: "a" }
+  path.join(__dirname, "logs", "access.log")
 );
 
 // setup the logger
