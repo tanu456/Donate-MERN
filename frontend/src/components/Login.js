@@ -1,4 +1,3 @@
-import e from "express";
 import React, { useState } from "react";
 
 function Login() {
@@ -11,8 +10,8 @@ function Login() {
     e.preventDefault();
   };
 
-  const loginClick = (event) => {
-    const [name, value] = event.target;
+  const InputEvent = (event) => {
+    const { name, value } = event.target;
 
     setItem((prevalue) => {
       return {
@@ -40,7 +39,8 @@ function Login() {
                   id="exampleInputEmail1"
                   aria-describedby="emailHelp"
                   name="email"
-                  value={item}
+                  value={item.email}
+                  onChange={InputEvent}
                 />
                 <div id="emailHelp" class="form-text">
                   yourname@gmail.com
@@ -55,14 +55,15 @@ function Login() {
                   class="form-control"
                   id="exampleInputPassword1"
                   name="password"
-                  value={item}
+                  value={item.password}
+                  onChange={InputEvent}
                 />
               </div>
               <div class="d-grid gap-2 mx-auto">
                 <button
                   class="btn btn-dark btn-lg mt-3"
                   type="button"
-                  onClick={loginClick}
+                  // onClick={loginClick}
                 >
                   Login
                 </button>
