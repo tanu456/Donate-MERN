@@ -1,6 +1,6 @@
-const mongooose = require('mongoose');
+const mongoose = require('mongoose');
 
-const NGOSchema = new mongooose.Schema({
+const NGOSchema = new mongoose.Schema({
   name: { type: String, required: true },
   password: { type: String, required: true },
   city: { type: String, required: true },
@@ -18,4 +18,4 @@ const NGOSchema = new mongooose.Schema({
   timestamps: true,
 });
 
-module.exports = mongooose.model('NGOs', NGOSchema);
+module.exports = mongoose.model('NGOs', NGOSchema);
