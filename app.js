@@ -1,22 +1,22 @@
 const express = require("express");
 const path = require("path");
-const fs = require('fs')
+const fs = require("fs");
 const mongoose = require("mongoose");
 const http = require("http");
 const bodyParser = require("body-parser");
 
-
 require("dotenv").config({ path: __dirname + "/.env" });
 const app = express();
-const morgan = require('morgan');
-
+const morgan = require("morgan");
 
 // create a write stream (in append mode)
-var accessLogStream = fs.createWriteStream(path.join(__dirname,'logs', 'access.log'), { flags: 'a' })
+var accessLogStream = fs.createWriteStream(
+  path.join(__dirname, "logs", "access.log"),
+  { flags: "a" }
+);
 
 // setup the logger
-app.use(morgan('common', { stream: accessLogStream }))
-
+app.use(morgan("common", { stream: accessLogStream }));
 
 const port = 5000;
 
