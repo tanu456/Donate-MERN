@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const DonationSchema = new mongooose.Schema({
+const DonationSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   ngo: { type: mongoose.Schema.Types.ObjectId, ref: "NGOs" },
   location: {
