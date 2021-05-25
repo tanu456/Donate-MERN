@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 const NGOSchema = new mongoose.Schema({
   name: { type: String, required: true },
   password: { type: String, required: true },
-  city: { type: String, required: true },
   email: { type: String, required: true },
   phone_number: { type: String, required: true },
   registration_number: { type: String, required: true },
