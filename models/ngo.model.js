@@ -8,7 +8,13 @@ const NGOSchema = new mongoose.Schema({
   phone_number: { type: String, required: true },
   registration_number: { type: String, required: true },
   ngo_images: { type: Array },
-  address: { type: String },
+  location: {
+    address: { type: String },
+    city: { type: String },
+    pin_code: { type: Number },
+    lattitude: { type: String },
+    longitude: { type: String },
+  },
   is_available: { type: Boolean, required: true, default: true },
   available_items: [{
     category: { type: String, required: true },
@@ -19,3 +25,4 @@ const NGOSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model('NGOs', NGOSchema);
+

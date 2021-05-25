@@ -3,7 +3,13 @@ const mongoose = require('mongoose');
 const DonationSchema = new mongooose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   ngo: { type: mongoose.Schema.Types.ObjectId, ref: "NGOs" },
-  address: { type: String, require: true },
+  location: {
+    address: { type: String },
+    city: { type: String },
+    pin_code: { type: Number },
+    lattitude: { type: String },
+    longitude: { type: String },
+  },
   current_state: { type: String, default: "CREATED" },
   item_images: { type: Array },
   pickup_person: { type: String },
@@ -16,3 +22,4 @@ const DonationSchema = new mongooose.Schema({
 });
 
 module.exports = mongoose.model('Donations', DonationSchema);
+
