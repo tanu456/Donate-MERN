@@ -118,7 +118,7 @@ exports.register = async (req, res) => {
     const url = "http://" + req.headers.host + "/api/v1/users/verify/" + token;
 
     await sgMail.send({
-      from: "tanya_11710163@nitkkr.ac.in",
+      from: "ngo.donation.108@gmail.com",
       to: personal_info.email,
       subject: "Account Verification",
       text:
