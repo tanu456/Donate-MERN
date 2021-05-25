@@ -1,4 +1,4 @@
-const mongooose = require('mongoose');
+const mongoose = require('mongoose');
 
 const DonationSchema = new mongooose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
@@ -15,4 +15,4 @@ const DonationSchema = new mongooose.Schema({
   timestamps: true,
 });
 
-module.exports = mongooose.model('Donations', DonationSchema);
+module.exports = mongoose.model('Donations', DonationSchema);
