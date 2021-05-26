@@ -1,7 +1,7 @@
-var express = require("express");
-var router = express.Router();
+const express = require("express");
+const router = express.Router();
 
-var requestController = require("../controllers/request.controller");
+const requestController = require("../controllers/request.controller");
 
 // /api/v1/request
 router.post("/", requestController.request);
