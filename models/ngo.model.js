@@ -24,4 +24,3 @@ const NGOSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model('NGOs', NGOSchema);
-

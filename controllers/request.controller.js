@@ -13,9 +13,9 @@ exports.request = async (req, res, next) => {
   const user =await Users.findOne({username : req.body.username});
   const ngo = await NGOs.findOne({name : req.body.ngo})
   
-  var request = new Request({
-    user: req.body.user,
-    ngo: req.body.ngo,
+  const request = new Request({
+    user: user._id,
+    ngo: ngo._id,
     location: req.body.location,
     current_state: req.body.current_state,
     item_images: req.body.item_images,
@@ -26,21 +26,21 @@ exports.request = async (req, res, next) => {
 
   try {
     
-    request = await request.save();
+    const req = await request.save();
     console.log("saved")
     await sgMail.send({
-      from: "tanya_11710163@nitkkr.ac.in",
+      from: "ngo.donation.108@gmail.com",
       to: ngo.email,
       subject: "Notification",
       text:
-        "You have got a pickup request from "+req.body.username+"\n Please pickup from the address "+ req.body.address + 
+        "You have got a pickup request from "+req.body.username+"\n Please pickup from the address "+ req.body.location + 
         "\n\nThank You!\n",
     });
 
     console.log("Email sent Successfully");
     res.status(200).send({
       message: "Request Added Successfully and notified ngos",
-      request,
+      req,
     });
   } catch (err) {
     res.status(500).send({
