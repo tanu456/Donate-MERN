@@ -3,6 +3,7 @@ var router = express.Router();
 var userController = require("../controllers/user.controller");
 var { verify_token } = require("../middlewares");
 
+
 //Prefix:: /api/v1/users
 
 router.get("/all", verify_token, userController.getAllUsers);
