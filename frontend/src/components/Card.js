@@ -1,7 +1,5 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import Ngodata from "./Ngodata";
-// console.log(Ngodata[0]);
 
 function Card(props) {
   return (
