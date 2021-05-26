@@ -1,7 +1,7 @@
-var express = require("express");
-var router = express.Router();
+const express = require("express");
+const router = express.Router();
 
-var ngoController = require("../controllers/ngo.controller");
+const ngoController = require("../controllers/ngo.controller");
 
 // /api/v1/ngos/all
 router.get("/all", ngoController.getAllNgos);

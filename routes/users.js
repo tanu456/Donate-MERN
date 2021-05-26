@@ -1,6 +1,6 @@
-var express = require("express");
-var router = express.Router();
-var userController = require("../controllers/user.controller");
+const express = require("express");
+const router = express.Router();
+const userController = require("../controllers/user.controller");
 
 //Prefix:: /api/v1/users
 
