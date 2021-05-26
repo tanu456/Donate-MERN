@@ -95,7 +95,7 @@ exports.register = async (req, res) => {
     personal_info.password = bcrypt.hashSync(personal_info.password, 10);
 
     //generating token which will be used for verifying user
-    const token = jwt.sign({ email: personal_info.email }, config.secret, {
+    const token = jwt.sign({ email: personal_info.email }, process.env.SECRET, {
       expiresIn: "1d",
     });
 
@@ -140,7 +140,7 @@ exports.register = async (req, res) => {
 
 exports.login = async (req, res) => {
   const { username, password } = req.body;
-  const user = await User.findOne({ username }).lean();
+  const user = await Users.findOne({ username }).lean();
 
   if (!user) {
     return res.json({ status: "error", error: "Invalid username/password" });
@@ -148,7 +148,7 @@ exports.login = async (req, res) => {
 
   if (await bcrypt.compare(password, user.password)) {
     // the username, password combination is successful
-    if (!user.is_Verified) {
+    if (!user.is_verified) {
       return res.status(401).json({
         type: "not-verified",
         message: "Your account has not been verified.",
@@ -159,7 +159,7 @@ exports.login = async (req, res) => {
         id: user._id,
         username: user.username,
       },
-      config.secret,
+      process.env.SECRET,
       { expiresIn: "1d" }
     );
 
@@ -171,7 +171,7 @@ exports.login = async (req, res) => {
 
 //Verify the link sent on email
 exports.verify = async (req, res) => {
-  const token = req.headers["x-access-token"];
+  const token = req.params.id;
 
   if (!token)
     return res
@@ -181,7 +181,8 @@ exports.verify = async (req, res) => {
   try {
     const user = await Users.findOne({ email_token: token });
     if (!user) return res.status(404).send("No user found.");
-    user.is_Verified = true;
+    user.is_verified = true;
+    user.email_token = undefined;
     await user.save();
     console.log(user);
     res.status(200).send("Verified Successfully");
