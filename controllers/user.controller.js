@@ -12,9 +12,8 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 // @desc    Get all users
 // @route   GET /api/v1/users/all
 exports.getAllUsers = async (req, res, next) => {
-  var users = null;
   try {
-    users = await Users.find({});
+    const users = await Users.find({});
     res.status(200).send(users);
   } catch (err) {
     res.status(500).send({
@@ -26,9 +25,8 @@ exports.getAllUsers = async (req, res, next) => {
 // @desc    Get User by query params
 // @route   GET /api/v1/users/get?field=value&....
 exports.getUsersByQuery = async (req, res, next) => {
-  var users = null;
   try {
-    users = await Users.findOne(req.query);
+    const users = await Users.findOne(req.query);
     res.status(200).send(users);
   } catch (err) {
     res.status(500).send({
@@ -40,11 +38,10 @@ exports.getUsersByQuery = async (req, res, next) => {
 // @desc    Edit user by id
 // @route   PUT /api/v1/users/:id
 exports.editUser = async (req, res, next) => {
-  var users = null;
   const filter = { _id: req.params.id };
   const changes = req.body;
   try {
-    users = await Users.updateOne(filter, changes);
+    const users = await Users.updateOne(filter, changes);
     res.status(200).send(users);
   } catch (err) {
     res.status(500).send({
@@ -118,7 +115,7 @@ exports.register = async (req, res) => {
     const url = "http://" + req.headers.host + "/api/v1/users/verify/" + token;
 
     await sgMail.send({
-      from: "ngo.donation.108@gmail.com",
+      from: "tanya_11710163@nitkkr.ac.in",
       to: personal_info.email,
       subject: "Account Verification",
       text:

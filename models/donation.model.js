@@ -22,4 +22,3 @@ const DonationSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model('Donations', DonationSchema);
-
