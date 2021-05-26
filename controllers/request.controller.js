@@ -13,7 +13,7 @@ exports.request = async (req, res, next) => {
   const user =await Users.findOne({username : req.body.username});
   const ngo = await NGOs.findOne({name : req.body.ngo})
   
-  var request = new Request({
+  const request = new Request({
     user: user._id,
     ngo: ngo._id,
     location: req.body.location,
@@ -26,7 +26,7 @@ exports.request = async (req, res, next) => {
 
   try {
     
-    request = await request.save();
+    const req = await request.save();
     console.log("saved")
     await sgMail.send({
       from: "ngo.donation.108@gmail.com",
@@ -40,7 +40,7 @@ exports.request = async (req, res, next) => {
     console.log("Email sent Successfully");
     res.status(200).send({
       message: "Request Added Successfully and notified ngos",
-      request,
+      req,
     });
   } catch (err) {
     res.status(500).send({

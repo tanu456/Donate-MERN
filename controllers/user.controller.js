@@ -100,7 +100,7 @@ exports.register = async (req, res) => {
     });
 
     // create and save user
-    var newUser = new Users({
+    const newUser = new Users({
       name: personal_info.name,
       username: personal_info.username,
       password: personal_info.password,

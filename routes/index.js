@@ -3,9 +3,9 @@ const router = express.Router();
 
 const ngos = require("./ngos");
 
-var users = require("./users");
-var request = require("./request");
-var contact = require("./contact");
+const users = require("./users");
+const request = require("./request");
+const contact = require("./contact");
 // /api/v1/users
 router.use("/users", users);
 
