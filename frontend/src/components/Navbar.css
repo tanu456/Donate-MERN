@@ -1,0 +1,36 @@
+.navbar {
+    background-color: #021E39 !important;
+    color: #FFF;
+    /* padding: 0px 0px; */
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+}
+
+.navigations {
+    margin-right: 5%;
+}
+
+.navbar a {
+    font-size: 1.3rem;
+    color: #FFF !important;
+    text-transform: capitalize;
+}
+
+.navbar a:hover {
+    transform: translateY(5px);
+}
+
+.active-link {
+    font-weight: bold;
+    border-bottom: 1px solid #FFF;
+}
+
+.dropdown-menu a {
+    color: #000 !important;
+}
+
+.navbar-toggler {
+    color: #FFF !important;
+}
