@@ -1,4 +1,4 @@
-const Request = require("../models/donation.model");
+const Donation = require("../models/donation.model");
 const Users = require("../models/user.model");
 const NGOs = require("../models/ngo.model");
 require("dotenv").config();
@@ -13,7 +13,7 @@ exports.request = async (req, res, next) => {
   const user =await Users.findOne({username : req.body.username});
   const ngo = await NGOs.findOne({name : req.body.ngo})
   
-  const request = new Request({
+  const donation = new Donation({
     user: user._id,
     ngo: ngo._id,
     location: req.body.location,
@@ -22,11 +22,11 @@ exports.request = async (req, res, next) => {
     pickup_person: req.body.pickup_person,
     items: req.body.items,
   });
-  console.log(request);
+  console.log(donation);
 
   try {
     
-    const req = await request.save();
+    const donate = await donation.save();
     console.log("saved")
     await sgMail.send({
       from: "ngo.donation.108@gmail.com",
@@ -40,7 +40,7 @@ exports.request = async (req, res, next) => {
     console.log("Email sent Successfully");
     res.status(200).send({
       message: "Request Added Successfully and notified ngos",
-      req,
+      donate,
     });
   } catch (err) {
     res.status(500).send({
@@ -53,9 +53,8 @@ exports.request = async (req, res, next) => {
 // @route   POST /api/v1/request/:id/cancel
 
 exports.requestCancel = async (req, res, next) => {
-  var request = null;
   try {
-    request = await Request.updateOne(
+    const donation = await Donation.updateOne(
       { _id: req.params.id },
       { $set: { current_state: "CANCELLED" } }
     );
