@@ -10,9 +10,10 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 // @route   POST /api/v1/request
 exports.request = async (req, res, next) => {
   
-  const user =await Users.findOne({username : req.body.username});
+  const user = await Users.findOne({username : req.body.username});
+  console.log(user);
   const ngo = await NGOs.findOne({name : req.body.ngo})
-  
+  console.log(ngo);
   const donation = new Donation({
     user: user._id,
     ngo: ngo._id,
@@ -30,7 +31,7 @@ exports.request = async (req, res, next) => {
     console.log("saved")
     await sgMail.send({
       from: "ngo.donation.108@gmail.com",
-      to: ngo.email,
+      to: "ngo.donate.querry@gmail.com",
       subject: "Notification",
       text:
         "You have got a pickup request from "+req.body.username+"\n Please pickup from the address "+ req.body.location + 
@@ -69,3 +70,19 @@ exports.requestCancel = async (req, res, next) => {
     });
   }
 };
+
+// @desc Update Request Status
+// @route PUT /api/v1/request/edit/:id
+
+exports.editRequest = async (req, res, next) => {
+  const filter = { _id: req.params.id };
+  const changes = req.body;
+  try {
+    const donation = await Donation.updateOne(filter, changes);
+    res.status(200).send(ngo);
+  } catch (err) {
+    res.status(500).send({
+      message: err.message || "Some error occurred while processing your request.",
+    });
+  }
+}
