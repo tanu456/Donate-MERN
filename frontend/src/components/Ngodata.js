@@ -1,5 +1,3 @@
-import React from "react";
-
 const Ngodata = [
   {
     ngoName: "NGO-1",
