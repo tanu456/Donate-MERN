@@ -36,7 +36,7 @@ function About() {
         <div className="row justify-content-center m-4">
           <div className="col-11 mb-4">
             <div className="section text-center">
-              <h2>We Serve for People.</h2>
+              <h2>We Serve People.</h2>
               <p>
                 Sedac odio aliquet, fringilla odio eget, tincidunt nunc duis
                 aliquet pulvinar ante.
