@@ -4,6 +4,7 @@ import Ngodata from "./Ngodata";
 import Search from "./Search/Search";
 
 import { INDIAN_DISTRICTS } from "../assets/districts.assets";
+import { CATEGORIES } from "../assets/category.assets";
 
 function Ngo() {
   return (
@@ -15,7 +16,7 @@ function Ngo() {
           </div>
           <div className="search">
             <Search searchHeader="City" dataset={INDIAN_DISTRICTS} />
-            <Search searchHeader="Category" dataset={INDIAN_DISTRICTS} />
+            <Search searchHeader="Category" dataset={CATEGORIES} />
           </div>
           <div className="row justify-content-around mt-4 g-lg-3">
             {Ngodata.map((value, index) => {
