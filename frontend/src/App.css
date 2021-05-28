@@ -135,3 +135,14 @@ body {
 .card-deck:hover {
   transform: scale(1.05, 1.05);
 }
+
+.heading-border {
+  border-bottom: 5px solid transparent;
+    border-image: linear-gradient(to right, #2978b5, #8ab6d6);
+    border-image-slice: 1;
+    padding: 12px;
+}
+
+.about-image {
+  max-width: 300px;
+}

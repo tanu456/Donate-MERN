@@ -5,6 +5,7 @@ const nodemailer = require("nodemailer");
 const bodyParser = require("body-parser");
 require("dotenv").config();
 const sgMail = require("@sendgrid/mail");
+const { config } = require("../config/auth.config");
 
 //Make account on sendgrid and create api key and add in env file and verify sender
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
