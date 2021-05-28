@@ -1,22 +1,9 @@
 import React from "react";
 import "./Search.scss";
-
-const REQUEST_URL = "https://jonasjacek.github.io/colors/data.json";
-
 class Search extends React.Component {
   state = {
-    // data: null,
     search: "",
-    color: ""
-  }
-  // fetch data
-  componentDidMount() {
-    fetch(REQUEST_URL)
-      .then(response => response.json())
-      .then(data => {
-        console.log(data);
-        this.setState({data})
-      })
+    selection: ""
   }
 
   // Search input   
@@ -29,16 +16,16 @@ class Search extends React.Component {
   // Select item
   onClickItem = item => this.setState({
     search: "",
-    color: item
+    selection: item
   });
 
   render() {
-    let { data, search, color } = this.state;
-    // const dataset = this.props.dataset;
+    let { search, selection } = this.state;
+    const data = this.props.dataset;
     if (!data) {
       return <p>Loading...</p>
     }
-    let filtered = data.filter(item => item.name.toLowerCase().includes(search.toLowerCase()));
+    let filtered = data.filter(item => item.toLowerCase().includes(search.toLowerCase()));
     return (
       <div>
         <div className="wrapper">
@@ -58,17 +45,15 @@ class Search extends React.Component {
           {search.length > 1 && filtered.length > 0 && (
             <ul className="list">
               {filtered.map(item => (
-                <li onClick={() => this.onClickItem(item)}>{item.name}</li>
+                <li onClick={() => this.onClickItem(item)}>{item}</li>
               ))}
             </ul>
           )}
         </div>
-        {color && (
+        {selection && (
           <p className="result">
-            <b>Color:</b>
-            {color.name}
-            <span className="box" style={{backgroundColor: color.hexString}}/>
-            {color.hexString}
+            <b>selection:</b>
+            {selection}
           </p>
         )}
       </div>

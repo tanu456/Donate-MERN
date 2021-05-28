@@ -8,7 +8,7 @@ import Home from "./components/Home";
 import About from "./components/About/About";
 import Cases from "./components/Cases";
 import Ngo from "./components/Ngo";
-import Contact from "./components/Contact";
+import Contact from "./components/Contact/Contact";
 import Footer from "./components/Footer";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
