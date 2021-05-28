@@ -14,9 +14,10 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 exports.getAllUsers = async (req, res, next) => {
   try {
     const users = await Users.find({});
-    res.status(200).send(users);
+    res.status(200).json({ success: true, users });
   } catch (err) {
-    res.status(500).send({
+    res.status(500).json({
+      success: false,
       message: err.message || "Some error occurred while retrieving entries.",
     });
   }
@@ -27,9 +28,10 @@ exports.getAllUsers = async (req, res, next) => {
 exports.getUsersByQuery = async (req, res, next) => {
   try {
     const users = await Users.findOne(req.query);
-    res.status(200).send(users);
+    res.status(200).json({ success: true, users });
   } catch (err) {
-    res.status(500).send({
+    res.status(500).json({
+      success: false,
       message: err.message || "Some error occurred while retrieving entries.",
     });
   }
@@ -42,9 +44,10 @@ exports.editUser = async (req, res, next) => {
   const changes = req.body;
   try {
     const users = await Users.updateOne(filter, changes);
-    res.status(200).send(users);
+    res.status(200).json({ success: true, users });
   } catch (err) {
-    res.status(500).send({
+    res.status(500).json({
+      success: false,
       message: err.message || "Some error occurred while retrieving entries.",
     });
   }
@@ -55,9 +58,10 @@ exports.editUser = async (req, res, next) => {
 exports.deleteUser = async (req, res, next) => {
   try {
     const response = await Users.deleteOne({ _id: req.params.id });
-    res.status(200).send(response);
+    res.status(200).json({ success: true, response });
   } catch (err) {
-    res.status(500).send({
+    res.status(500).json({
+      success: false,
       message: err.message || "Some error occurred while retrieving entries.",
     });
   }
@@ -84,6 +88,7 @@ exports.register = async (req, res) => {
     const user = await Users.findOne({ email: personal_info.email });
     if (user)
       return res.status(401).json({
+        success: false,
         message:
           "The email address you have entered is already associated with another account.",
       });
@@ -140,14 +145,14 @@ exports.login = async (req, res) => {
   const user = await Users.findOne({ username }).lean();
 
   if (!user) {
-    return res.json({ status: "error", error: "Invalid username/password" });
+    return res.json({ success: false, error: "Invalid username/password" });
   }
 
   if (await bcrypt.compare(password, user.password)) {
     // the username, password combination is successful
     if (!user.is_verified) {
       return res.status(401).json({
-        type: "not-verified",
+        success: false,
         message: "Your account has not been verified.",
       });
     }
@@ -160,10 +165,10 @@ exports.login = async (req, res) => {
       { expiresIn: "1d" }
     );
 
-    return res.json({ status: "ok", data: token, id: user._id });
+    return res.status(200).json({ success: false, data: token, id: user._id });
   }
 
-  res.json({ status: "error", error: "Invalid username/password" });
+  res.status(403).json({ success: false, error: "Invalid username/password" });
 };
 
 //Verify the link sent on email
@@ -171,19 +176,20 @@ exports.verify = async (req, res) => {
   const token = req.params.id;
 
   if (!token)
-    return res
-      .status(400)
-      .json({ message: "We were unable to find a user for this token." });
+    return res.status(400).json({ success: false, message: "Token Missing" });
 
   try {
     const user = await Users.findOne({ email_token: token });
-    if (!user) return res.status(404).send("No user found.");
+    if (!user)
+      return res
+        .status(404)
+        .json({ success: false, message: "No user found." });
     user.is_verified = true;
     user.email_token = undefined;
     await user.save();
     console.log(user);
-    res.status(200).send("Verified Successfully");
+    res.status(200).json({ success: true, message: "Verified Successfully" });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ success: false, message: error.message });
   }
 };

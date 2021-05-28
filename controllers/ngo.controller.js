@@ -8,9 +8,10 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 exports.getAllNgos = async (req, res, next) => {
   try {
     const ngos = await NGOs.find({});
-    res.status(200).send(ngos);
+    res.status(200).json({success:true,ngos});
   } catch (err) {
-    res.status(500).send({
+    res.status(500).json({
+        success:false,
       message: err.message || "Some error occurred while retrieving entries.",
     });
   }
@@ -19,9 +20,10 @@ exports.getAllNgos = async (req, res, next) => {
 exports.getNgoByQuery = async (req, res, next) => {
   try {
     const ngo = await NGOs.findOne(req.query);
-    res.status(200).send(ngo);
+    res.status(200).json({success:true,ngo});
   } catch (err) {
-    res.status(500).send({
+    res.status(500).json({
+        success:false,
       message: err.message || "Some error occured while retrieving entry.",
     });
   }
@@ -30,11 +32,13 @@ exports.getNgoByQuery = async (req, res, next) => {
 exports.deleteNgoById = async (req, res, next) => {
   try {
     await NGOs.remove({ _id: req.params.id });
-    res.status(200).send({
+    res.status(200).json({
+        success:true,
       message: "NGO successfully deleted.",
     });
   } catch (err) {
-    res.status(500).send({
+    res.status(500).json({
+        success:false,
       message: err.message || "Some error occured while deleting entry.",
     });
   }
@@ -59,6 +63,9 @@ exports.createNgo = async (req, res, next) => {
   //hashing password
   ngo_info.password = bcrypt.hashSync(ngo_info.password, 10);
 
+  const token = jwt.sign({ email: ngo_info.email }, process.env.SECRET, {
+    expiresIn: "1d",
+  });
   var ngo = new NGOs({
     name: ngo_info.name,
     password: ngo_info.password,
@@ -66,13 +73,12 @@ exports.createNgo = async (req, res, next) => {
     phone_number: ngo_info.phone_number,
     registration_number: ngo_info.registration_number,
     ngo_images: ngo_info.ngo_images,
+    email_token:token,
+    is_verified:false,
     location: ngo_info.location,
     address: ngo_info.address,
     is_available: ngo_info.is_available,
     available_items: ngo_info.available_items,
-  });
-  const token = jwt.sign({ email: ngo_info.email }, process.env.SECRET, {
-    expiresIn: "1d",
   });
     //Email verification
     const url = "http://" + req.headers.host + "/api/v1/users/verify/" + token;
@@ -91,12 +97,12 @@ exports.createNgo = async (req, res, next) => {
         url +
         "\n\nThank You!\n",
     });
-    res.status(200).send({
+    res.status(200).json({
       message: "NGO created Successfully",
       ngo,
     });
   } catch (err) {
-    res.status(500).send({
+    res.status(500).json({
       message:
         err.message || "Some error occurred while processing your request",
     });
@@ -108,9 +114,10 @@ exports.editNgo = async (req, res, next) => {
   const changes = req.body;
   try {
     const ngo = await NGOs.updateOne(filter, changes);
-    res.status(200).send(ngo);
+    res.status(200).json({success:true,ngo});
   } catch (err) {
-    res.status(500).send({
+    res.status(500).json({
+        success:false,
       message:
         err.message || "Some error occurred while processing your request",
     });
@@ -122,10 +129,16 @@ exports.login = async (req, res) => {
   const ngo = await NGOs.findOne({ email }).lean();
 
   if (!ngo) {
-    return res.json({ status: "error", error: "Invalid email-id" });
+    return res.json({ success:false , error: "Invalid username/password" });
   }
   if (await bcrypt.compare(password, ngo.password)) {
     //the username,password combination is successfull
+    if(!ngo.is_verified){
+      return res.status(401).json({
+          success:false,
+        message: "Your account has not been verified.",
+      });
+    }
     const token = jwt.sign(
       {
         id: ngo._id,
@@ -134,7 +147,30 @@ exports.login = async (req, res) => {
       process.env.SECRET,
       { expiresIn: "1d" }
     );
-    return res.json({ status: "ok", data: token, id: ngo._id });
+    return res.json({ success:true , id: ngo._id });
   }
-  return res.json({ status: "error", error: "Invalid username/password" });
+  return res.json({ success:true , error: "Invalid username/password" });
+};
+
+//Verify the link sent on email
+exports.verify = async (req, res) => {
+  const token = req.params.id;
+    console.log( token)
+
+  if (!token)
+    return res
+      .status(400)
+      .json({success:false, message: "Token Missing" });
+
+  try {
+    const ngo = await NGOs.findOne({ email_token: token });
+    if (!ngo) return res.status(404).json({success:false,message:"No ngo found."});
+    ngo.is_verified = true;
+    ngo.email_token = undefined;
+    await ngo.save();
+    console.log(ngo);
+    res.status(200).json({success:true,message:"Verified Successfully"});
+  } catch (error) {
+    res.status(500).json({success:false, message: error.message });
+  }
 };

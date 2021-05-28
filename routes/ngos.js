@@ -21,4 +21,7 @@ router.put("/:id", ngoController.editNgo);
 // /api/v1/ngos/login
 router.post("/login", ngoController.login);
 
+// /api/v1/ngos/verify/:id
+router.get("/verify/:id", ngoController.verify);
+
 module.exports = router;
