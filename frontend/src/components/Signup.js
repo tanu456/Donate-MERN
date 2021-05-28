@@ -1,7 +1,7 @@
 /* eslint-disable no-useless-escape */
 /* eslint-disable default-case */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 
 function Signup() {

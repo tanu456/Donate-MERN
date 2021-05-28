@@ -1,13 +1,15 @@
 const express = require("express");
 const router = express.Router();
 
-const requestController = require("../controllers/request.controller");
+const donationController = require("../controllers/donation.controller");
 
 // /api/v1/request
-router.post("/", requestController.request);
+router.post("/", donationController.request);
 
 // /api/v1/request/:id/cancel
-router.get("/:id/cancel", requestController.requestCancel);
+router.post("/:id/cancel", donationController.requestCancel);
 
+// /api/v1/request/:id/edit
+router.put("/edit/:id", donationController.editRequest);
 
 module.exports = router;

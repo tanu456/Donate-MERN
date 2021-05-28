@@ -1,4 +1,4 @@
-const Request = require("../models/donation.model");
+const Donation = require("../models/donation.model");
 const Users = require("../models/user.model");
 const NGOs = require("../models/ngo.model");
 require("dotenv").config();
@@ -10,10 +10,11 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 // @route   POST /api/v1/request
 exports.request = async (req, res, next) => {
   
-  const user =await Users.findOne({username : req.body.username});
+  const user = await Users.findOne({username : req.body.username});
+  console.log(user);
   const ngo = await NGOs.findOne({name : req.body.ngo})
-  
-  const request = new Request({
+  console.log(ngo);
+  const donation = new Donation({
     user: user._id,
     ngo: ngo._id,
     location: req.body.location,
@@ -22,15 +23,15 @@ exports.request = async (req, res, next) => {
     pickup_person: req.body.pickup_person,
     items: req.body.items,
   });
-  console.log(request);
+  console.log(donation);
 
   try {
     
-    const req = await request.save();
+    const donate = await donation.save();
     console.log("saved")
     await sgMail.send({
       from: "ngo.donation.108@gmail.com",
-      to: ngo.email,
+      to: "ngo.donate.querry@gmail.com",
       subject: "Notification",
       text:
         "You have got a pickup request from "+req.body.username+"\n Please pickup from the address "+ req.body.location + 
@@ -40,7 +41,7 @@ exports.request = async (req, res, next) => {
     console.log("Email sent Successfully");
     res.status(200).send({
       message: "Request Added Successfully and notified ngos",
-      req,
+      donate,
     });
   } catch (err) {
     res.status(500).send({
@@ -53,9 +54,8 @@ exports.request = async (req, res, next) => {
 // @route   POST /api/v1/request/:id/cancel
 
 exports.requestCancel = async (req, res, next) => {
-  var request = null;
   try {
-    request = await Request.updateOne(
+    const donation = await Donation.updateOne(
       { _id: req.params.id },
       { $set: { current_state: "CANCELLED" } }
     );
@@ -70,3 +70,19 @@ exports.requestCancel = async (req, res, next) => {
     });
   }
 };
+
+// @desc Update Request Status
+// @route PUT /api/v1/request/edit/:id
+
+exports.editRequest = async (req, res, next) => {
+  const filter = { _id: req.params.id };
+  const changes = req.body;
+  try {
+    const donation = await Donation.updateOne(filter, changes);
+    res.status(200).send(ngo);
+  } catch (err) {
+    res.status(500).send({
+      message: err.message || "Some error occurred while processing your request.",
+    });
+  }
+}
