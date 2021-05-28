@@ -9,7 +9,6 @@ require("dotenv").config({ path: __dirname + "/.env" });
 const app = express();
 const morgan = require("morgan");
 
-// create a write stream (in append mode)
 var accessLogStream = fs.createWriteStream(
   path.join(__dirname, "logs", "access.log")
 );

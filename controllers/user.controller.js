@@ -63,23 +63,23 @@ exports.deleteUser = async (req, res, next) => {
   }
 };
 exports.register = async (req, res) => {
-  try {
-    const personal_info = req.body;
-    if (
-      !personal_info ||
-      !personal_info.name ||
-      !personal_info.username ||
-      !personal_info.password ||
-      !personal_info.city ||
-      !personal_info.phone_number ||
-      !personal_info.aadhar_number
-    ) {
-      return res.status(404).json({
-        success: false,
-        msg: "Please enter all fields",
-      });
-    }
+  const personal_info = req.body;
+  if (
+    !personal_info ||
+    !personal_info.name ||
+    !personal_info.username ||
+    !personal_info.password ||
+    !personal_info.city ||
+    !personal_info.phone_number ||
+    !personal_info.aadhar_number
+  ) {
+    return res.status(404).json({
+      success: false,
+      msg: "Please enter all fields",
+    });
+  }
 
+  try {
     //Email should be unique
     const user = await Users.findOne({ email: personal_info.email });
     if (user)
@@ -115,7 +115,7 @@ exports.register = async (req, res) => {
     const url = "http://" + req.headers.host + "/api/v1/users/verify/" + token;
 
     await sgMail.send({
-      from: "tanya_11710163@nitkkr.ac.in",
+      from: process.env.SGMAIL_EMAIL,
       to: personal_info.email,
       subject: "Account Verification",
       text:
@@ -160,7 +160,7 @@ exports.login = async (req, res) => {
       { expiresIn: "1d" }
     );
 
-    return res.json({ status: "ok", data: token });
+    return res.json({ status: "ok", data: token, id: user._id });
   }
 
   res.json({ status: "error", error: "Invalid username/password" });
