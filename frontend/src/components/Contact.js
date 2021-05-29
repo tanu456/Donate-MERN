@@ -53,8 +53,25 @@ function Contact() {
     }
   };
 
-  const showMessage = () => {
-    alert("Form Submitted Successfully!!!");
+  const submitHandler = async (e) => {
+    const url = "http://localhost:5000/api/v1/contact";
+    e.preventDefault();
+    const { fullName, phoneNo, email, query } = input;
+    const res = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json"
+      },
+      body: JSON.stringify({
+        fullName, phoneNo, email, query
+      })
+    });
+    if(res.status === 500 || !res){
+      alert("Some error occurred");
+    }
+    else{
+      alert("Form Submitted Successfully!!!");
+    }
   };
 
   return (
@@ -134,7 +151,7 @@ function Contact() {
                 <button
                   class="btn btn-primary"
                   type="submit"
-                  onClick={showMessage}
+                  onClick={submitHandler}
                 >
                   Submit form
                 </button>
