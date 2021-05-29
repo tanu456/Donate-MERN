@@ -8,6 +8,7 @@ const bodyParser = require("body-parser");
 require("dotenv").config({ path: __dirname + "/.env" });
 const app = express();
 const morgan = require("morgan");
+const cors = require("cors");
 
 // create a write stream (in append mode)
 var accessLogStream = fs.createWriteStream(
@@ -16,6 +17,9 @@ var accessLogStream = fs.createWriteStream(
 
 // setup the logger
 app.use(morgan("common", { stream: accessLogStream }));
+
+//allow cross origin resource sharing
+app.use(cors());
 
 const port = 5000;
 
