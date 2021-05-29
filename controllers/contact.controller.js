@@ -1,3 +1,4 @@
+const logger = require("../utils/logger");
 require("dotenv").config();
 const sgMail = require("@sendgrid/mail");
 
@@ -6,14 +7,7 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 exports.contactUs = async (req, res, next) => {
   try{
-  
-  const name= req.body.name;
-  const email= req.body.email;
-  const phone_number= req.body.phone_number;
-  const query= req.body.query;
-  
   await sgMail.send({
-
     from: "ngo.donation.108@gmail.com",
     to: "tanya1998agarwal43@gmail.com",
     subject: "Query from Customer",
@@ -23,12 +17,13 @@ exports.contactUs = async (req, res, next) => {
       "\n\nThank You!\n",
   });
 
-  console.log("Email sent Successfully");
+  logger.info("Contact email sent successfully");
   res.status(200).send(
     "Email sent Successfully"
   );
 
   } catch (err) {
+    logger.error("Error in sending contact email", err);
     res.status(500).send({
       message: err.message || "Some error occurred while retrieving entries.",
     });
