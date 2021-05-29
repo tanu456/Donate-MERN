@@ -77,10 +77,10 @@ exports.createNgo = async (req, res, next) => {
   logger.debug("NGO created", ngo);
 
   try {
-    ngo = await ngo.save();
+    const newNgo = await ngo.save();
     res.status(200).send({
       message: "NGO created Successfully",
-      ngo,
+      newNgo,
     });
   } catch (err) {
     logger.error(err);
