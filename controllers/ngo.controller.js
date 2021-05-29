@@ -1,5 +1,6 @@
 const NGOs = require("../models/ngo.model");
 const bcrypt = require("bcryptjs");
+const { config } = require("../config/auth.config");
 
 exports.getAllNgos = async (req, res, next) => {
   try {
@@ -103,7 +104,15 @@ exports.login = async (req, res) => {
   }
   if(await bcrypt.compare(password, ngo.password)) {
     //the username,password combination is successfull
-    return res.json({ status: "ok", message: "Successfully logged in"});
+    const token = jwt.sign(
+      {
+        id: ngo._id,
+        email: ngo.email,
+      },
+      config.secret,
+      { expiresIn: "1d" }
+    );
+    return res.json({ status: "ok", data: token , id: ngo._id });
   }
   return res.json({ status: "error", error: "Invalid password"});
 }
