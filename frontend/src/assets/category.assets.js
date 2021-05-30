@@ -1,8 +1,8 @@
 const CATEGORIES = [
-  'Cloth',
-  'Book',
-  'Medicine',
-  'Electronics'
+  "Clothes",
+  "Education",
+  "Medicine",
+  "Electronics"
 ]
 
 const _CATEGORIES = CATEGORIES;
