@@ -3,7 +3,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { logger } from "../../../utils/logger";
 
 function Signup() {
   const [item, setItem] = useState({
@@ -39,8 +38,8 @@ function Signup() {
 
   const getLocation = () => {
     navigator.geolocation.getCurrentPosition(function (position) {
-      logger.info("Latitude is :", position.coords.latitude);
-      logger.info("Longitude is :", position.coords.longitude);
+      console.log("Latitude is :", position.coords.latitude);
+      console.log("Longitude is :", position.coords.longitude);
     });
   };
 
