@@ -7,7 +7,6 @@ const dbURI = `mongodb+srv://${db.user}:${encodeURIComponent(db.password)}@${
   db.host
 }/${db.name}`;
 
-const url ='mongodb://127.0.0.1:27017/donate';
 const options = {
   useNewUrlParser: true,
   useCreateIndex: true,
