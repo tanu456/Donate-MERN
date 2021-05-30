@@ -23,7 +23,7 @@ console.log("Database Url : ", dbURI);
 
 //Create the databse connection
 try {
-  mongoose.connect(url, options);
+  mongoose.connect(dbURI, options);
   console.log("Mongoose connection done");
 } catch (e) {
   console.log("Mongoose connection error");

@@ -39,20 +39,26 @@ exports.deleteNgoById = async (req, res, next) => {
 
 exports.createNgo = async (req, res, next) => {
   const ngo_info = req.body;
+  console.log(ngo_info);
   if ( 
     !ngo_info ||
     !ngo_info.name ||
     !ngo_info.password ||
     !ngo_info.email ||
-    !ngo_info.phone_number ||
-    !ngo_info.registration_number 
+    !ngo_info.phoneNumber ||
+    !ngo_info.registrationNumber 
   ) {
     return res.status(404).json({
       success: false,
       message: "Please enter all required fields.",
     });
   }
-
+  if( ngo_info.password != ngo_info.confirmPassword ) {
+    return res.status(400).json({
+      success: false,
+      message: "Your password and confirmation password do not match",
+    });
+  }
   //hashing password
   ngo_info.password = bcrypt.hashSync(ngo_info.password, 10);
 
@@ -60,11 +66,10 @@ exports.createNgo = async (req, res, next) => {
     name: ngo_info.name,
     password: ngo_info.password,
     email: ngo_info.email,
-    phone_number: ngo_info.phone_number,
-    registration_number: ngo_info.registration_number,
+    phone_number: ngo_info.phoneNumber,
+    registration_number: ngo_info.registrationNumber,
     ngo_images: ngo_info.ngo_images,
     location: ngo_info.location,
-    address: ngo_info.address,
     is_available: ngo_info.is_available,
     available_items: ngo_info.available_items
   });
