@@ -1,12 +1,15 @@
 const NGOs = require("../models/ngo.model");
 const bcrypt = require("bcryptjs");
 const { config } = require("../config/auth.config");
+const logger = require("../utils/logger");
 
 exports.getAllNgos = async (req, res, next) => {
   try {
     const ngos = await NGOs.find({});
     res.status(200).send(ngos);
   } catch (err) {
+    logger.error(err);
+
     res.status(500).send({
       message: err.message || "Some error occurred while retrieving entries.",
     });
@@ -18,6 +21,8 @@ exports.getNgoByQuery = async (req, res, next) => {
     const ngo = await NGOs.findOne(req.query);
     res.status(200).send(ngo);
   } catch (err) {
+    logger.error(err);
+
     res.status(500).send({
       message: err.message || "Some error occured while retrieving entry.",
     });
@@ -31,6 +36,8 @@ exports.deleteNgoById = async (req, res, next) => {
       message: "NGO successfully deleted.",
     });
   } catch (err) {
+    logger.error(err);
+
     res.status(500).send({
       message: err.message || "Some error occured while deleting entry.",
     });
@@ -62,7 +69,7 @@ exports.createNgo = async (req, res, next) => {
   //hashing password
   ngo_info.password = bcrypt.hashSync(ngo_info.password, 10);
 
-  var ngo = new NGOs({
+  const ngo = new NGOs({
     name: ngo_info.name,
     password: ngo_info.password,
     email: ngo_info.email,
@@ -73,14 +80,17 @@ exports.createNgo = async (req, res, next) => {
     is_available: ngo_info.is_available,
     available_items: ngo_info.available_items
   });
+  logger.debug("NGO created", ngo);
+
   try {
-    ngo = await ngo.save();
-  
+    const newNgo = await ngo.save();
     res.status(200).send({
       message: "NGO created Successfully",
-      ngo,
+      newNgo,
     });
   } catch (err) {
+    logger.error(err);
+
     res.status(500).send({
       message: err.message || "Some error occurred while processing your request",
     });
@@ -90,10 +100,13 @@ exports.createNgo = async (req, res, next) => {
 exports.editNgo = async (req, res, next) => {
   const filter = { _id: req.params.id };
   const changes = req.body;
-  try{
+
+  try{ 
     const ngo = await NGOs.updateOne(filter, changes);
     res.status(200).send(ngo);
   } catch (err) {
+    logger.error(err);
+
     res.status(500).send({
       message: err.message || "Some error occurred while processing your request",
     });
@@ -104,10 +117,10 @@ exports.login = async (req, res) => {
   const { email, password } = req.body;
   const ngo = await NGOs.findOne({ email }).lean();
 
-  if(!ngo) {
-    return res.json({ status: "error", error: "Invalid email-id" });
+  if (!ngo) {
+    return res.json({ status: "error", error: "This email id is not registered" });
   }
-  if(await bcrypt.compare(password, ngo.password)) {
+  if (await bcrypt.compare(password, ngo.password)) {
     //the username,password combination is successfull
     const token = jwt.sign(
       {
@@ -119,5 +132,7 @@ exports.login = async (req, res) => {
     );
     return res.json({ status: "ok", data: token , id: ngo._id });
   }
+  logger.info("Invalid password");
+
   return res.json({ status: "error", error: "Invalid password"});
 }

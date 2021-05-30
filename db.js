@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const logger = require("./utils/logger");
 
 // database config
 const { db } = require("./config/db");
@@ -19,30 +20,29 @@ const options = {
   socketTimeoutMS: 45000,
 };
 
-console.log("Database Url : ", dbURI);
+logger.info("Database Url : ", dbURI);
 
 //Create the databse connection
 try {
   mongoose.connect(dbURI, options);
-  console.log("Mongoose connection done");
-} catch (e) {
-  console.log("Mongoose connection error");
-  console.log(e);
+  logger.info("Mongoose connection done");
+} catch (err) {
+  logger.error("Mongoose connection error", err);
 }
 
 // Events
 
 // Successfully Connected
 mongoose.connection.on("connected", () => {
-  console.log("Mongoose default connection open to " + dbURI);
+  logger.info("Mongoose default connection open to " + dbURI);
 });
 
 // If the connection thorows an error
 mongoose.connection.on("error", (err) => {
-  console.log("Mongoose default connection error: " + err);
+  logger.error("Mongoose default connection error: " + err);
 });
 
 // When the connection is disconnected
 mongoose.connection.on("disconnected", () => {
-  console.log("Mongoose default connection disconnected");
+  logger.info("Mongoose default connection disconnected");
 });

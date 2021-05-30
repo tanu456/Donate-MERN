@@ -1,6 +1,0 @@
-::1 - - [30/May/2021:08:38:39 +0000] "OPTIONS /api/v1/ngos/create HTTP/1.1" 204 0
-::1 - - [30/May/2021:08:38:39 +0000] "POST /api/v1/ngos/create HTTP/1.1" 404 63
-::1 - - [30/May/2021:08:39:03 +0000] "OPTIONS /api/v1/ngos/create HTTP/1.1" 204 0
-::1 - - [30/May/2021:08:39:03 +0000] "POST /api/v1/ngos/create HTTP/1.1" 400 82
-::1 - - [30/May/2021:09:41:52 +0000] "OPTIONS /api/v1/ngos/create HTTP/1.1" 204 0
-::1 - - [30/May/2021:09:41:55 +0000] "POST /api/v1/ngos/create HTTP/1.1" 200 513
