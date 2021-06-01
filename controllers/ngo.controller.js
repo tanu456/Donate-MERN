@@ -1,5 +1,6 @@
 const NGOs = require("../models/ngo.model");
 const bcrypt = require("bcryptjs");
+const { config } = require("../config/auth.config");
 const logger = require("../utils/logger");
 
 exports.getAllNgos = async (req, res, next) => {
@@ -45,13 +46,14 @@ exports.deleteNgoById = async (req, res, next) => {
 
 exports.createNgo = async (req, res, next) => {
   const ngo_info = req.body;
+  console.log(ngo_info);
   if ( 
     !ngo_info ||
     !ngo_info.name ||
     !ngo_info.password ||
     !ngo_info.email ||
-    !ngo_info.phone_number ||
-    !ngo_info.registration_number 
+    !ngo_info.phoneNumber ||
+    !ngo_info.registrationNumber 
   ) {
     return res.status(404).json({
       success: false,
@@ -60,19 +62,19 @@ exports.createNgo = async (req, res, next) => {
   }
 
   //hashing password
-  ngo_info.password = bcrypt.hashSync(ngo_info.password, 10);
+  ngo_info.password = await bcrypt.hashSync(ngo_info.password, 10);
 
   const ngo = new NGOs({
     name: ngo_info.name,
     password: ngo_info.password,
     email: ngo_info.email,
-    phone_number: ngo_info.phone_number,
-    registration_number: ngo_info.registration_number,
+    phone_number: ngo_info.phoneNumber,
+    registration_number: ngo_info.registrationNumber,
     ngo_images: ngo_info.ngo_images,
     location: ngo_info.location,
     address: ngo_info.address,
     is_available: ngo_info.is_available,
-    available_items: ngo_info.available_items
+    available_items: ngo_info.availableItems
   });
   logger.debug("NGO created", ngo);
 
@@ -116,7 +118,15 @@ exports.login = async (req, res) => {
   }
   if (await bcrypt.compare(password, ngo.password)) {
     //the username,password combination is successfull
-    return res.json({ status: "ok", message: "Successfully logged in"});
+    const token = jwt.sign(
+      {
+        id: ngo._id,
+        email: ngo.email,
+      },
+      config.secret,
+      { expiresIn: "1d" }
+    );
+    return res.json({ status: "ok", data: token , id: ngo._id });
   }
   logger.info("Invalid password");
 

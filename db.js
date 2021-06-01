@@ -8,7 +8,6 @@ const dbURI = `mongodb+srv://${db.user}:${encodeURIComponent(db.password)}@${
   db.host
 }/${db.name}`;
 
-
 const options = {
   useNewUrlParser: true,
   useCreateIndex: true,
@@ -30,7 +29,6 @@ try {
 } catch (err) {
   logger.error("Mongoose connection error", err);
 }
-
 // Events
 
 // Successfully Connected
