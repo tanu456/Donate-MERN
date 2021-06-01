@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 /* eslint-disable default-case */
 import React, { useState } from "react";
 
