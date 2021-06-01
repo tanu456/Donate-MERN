@@ -11,8 +11,12 @@ function Ngosignup() {
     phoneNumber: "",
     registrationNumber: "",
     address: "",
+<<<<<<< HEAD
     city: "",
     pin_code: "",
+=======
+    pincode: "",
+>>>>>>> 86749313b04af1aadfc1639c75954b053a274310
     password: "",
     confirmPassword: "",
     availableItems:"",
@@ -22,8 +26,12 @@ function Ngosignup() {
       phoneNumber: "",
       registrationNumber: "",
       address: "",
+<<<<<<< HEAD
       city: "",
       pin_code: "",
+=======
+      pincode: "",
+>>>>>>> 86749313b04af1aadfc1639c75954b053a274310
       password: "",
       confirmPassword: "",
     },
@@ -39,6 +47,13 @@ function Ngosignup() {
 
   const formSubmit = (e) => {
     e.preventDefault();
+  };
+
+  const getLocation = () => {
+    navigator.geolocation.getCurrentPosition(function (position) {
+      console.log("Latitude is :", position.coords.latitude);
+      console.log("Longitude is :", position.coords.longitude);
+    });
   };
 
   const validEmailRegex = RegExp(
@@ -77,8 +92,8 @@ function Ngosignup() {
       case "address":
         item.error.address = value.length < 10 ? "Invalid Address!!" : "";
         break;
-      case "city":
-        item.error.city = value.length < 2 ? "Invalid city!!" : "";
+      case "pincode":
+        item.error.pincode = value.length != 6 ? "Invalid Pincode!!" : "";
         break;
       case "pin_code":
         item.error.pin_code = value.length !== 6 ? "Invalid pincode" : "";
@@ -193,18 +208,28 @@ function Ngosignup() {
 
               <div class="mb-3">
                 <label for="" class="form-label">
-                  City
+                  Pincode
                 </label>
                 <input
                   type="text"
                   class="form-control"
-                  id="city"
-                  placeholder="Enter your city"
-                  name="city"
-                  value={item.city}
+                  id="pincode"
+                  placeholder="Enter Pincode"
+                  name="pincode"
+                  value={item.pincode}
                   onChange={inputEvent}
                 />
-                <h6 className="validation-text mt-2">{item.error.city}</h6>
+                <h6 className="validation-text mt-2">{item.error.pincode}</h6>
+              </div>
+
+              <div className="mb-3">
+                <label class="form-label">Location</label>
+                <button
+                  className="btn btn-outline-dark btn-md ms-4"
+                  onClick={getLocation}
+                >
+                  Your Location
+                </button>
               </div>
 
               <div class="mb-3">

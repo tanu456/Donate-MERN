@@ -1,8 +1,8 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import React from "react";
-import Aboutcard from "./Aboutcard";
-import Aboutdata from "./Aboutdata";
-import about_image from "./images/about-image.png";
+import Aboutcard from "../Aboutcard";
+import Aboutdata from "../Aboutdata";
+import about_image from ".././images/about-image.png";
 
 function About() {
   return (
