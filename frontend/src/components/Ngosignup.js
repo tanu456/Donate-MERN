@@ -11,12 +11,8 @@ function Ngosignup() {
     phoneNumber: "",
     registrationNumber: "",
     address: "",
-<<<<<<< HEAD
     city: "",
     pin_code: "",
-=======
-    pincode: "",
->>>>>>> 86749313b04af1aadfc1639c75954b053a274310
     password: "",
     confirmPassword: "",
     availableItems:"",
@@ -26,12 +22,8 @@ function Ngosignup() {
       phoneNumber: "",
       registrationNumber: "",
       address: "",
-<<<<<<< HEAD
       city: "",
       pin_code: "",
-=======
-      pincode: "",
->>>>>>> 86749313b04af1aadfc1639c75954b053a274310
       password: "",
       confirmPassword: "",
     },
