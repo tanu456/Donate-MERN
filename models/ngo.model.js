@@ -14,7 +14,7 @@ const NGOSchema = new mongoose.Schema({
     latitude: { type: String },
     longitude: { type: String },
   },
-  is_available: { type: Boolean, required: true, default: true },
+  is_available: { type: Boolean, default: true },
   available_items: [{
     category: { type: String, required: true },
     item_count: { type: Number, default: 0 }

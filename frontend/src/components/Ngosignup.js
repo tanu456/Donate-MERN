@@ -15,6 +15,7 @@ function Ngosignup() {
     pin_code: "",
     password: "",
     confirmPassword: "",
+    availableItems:"",
     error: {
       name: "",
       email: "",
@@ -27,6 +28,14 @@ function Ngosignup() {
       confirmPassword: "",
     },
   });
+  const [isCloth, setIsCloth] = useState(false);
+  const [isBook, setIsBook] = useState(false);
+  const toggleCloth = () => {
+    setIsCloth(!isCloth);
+  };
+  const toggleBook = () => {
+    setIsBook(!isBook);
+  };
 
   const formSubmit = (e) => {
     e.preventDefault();
@@ -35,6 +44,7 @@ function Ngosignup() {
   const validEmailRegex = RegExp(
     /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
   );
+
 
   const inputEvent = (e) => {
     const { name, value } = e.target;
@@ -71,7 +81,7 @@ function Ngosignup() {
         item.error.city = value.length < 2 ? "Invalid city!!" : "";
         break;
       case "pin_code":
-        item.error.pin_code = value.length != 6 ? "Invalid pincode" : "";
+        item.error.pin_code = value.length !== 6 ? "Invalid pincode" : "";
         break;
       case "password":
         item.error.password =
@@ -88,11 +98,17 @@ function Ngosignup() {
   const registerHandler = async (e) => {
     const url = "http://localhost:5000/api/v1/ngos/create";
     e.preventDefault();
+    const avbl = [];
+    if(isBook)
+      avbl.push({"category":"books"});
+    if(isCloth)
+      avbl.push({"category":"clothes"});
+    console.log(avbl);
     const data = 
     { name: item.name, email: item.email, 
       phoneNumber:item.phoneNumber, registrationNumber:item.registrationNumber, 
       location: { address: item.address, city: item.city, pin_code:item.pin_code }, 
-      password: item.password, confirmPassword: item.confirmPassword 
+      password: item.password, confirmPassword: item.confirmPassword , availableItems:avbl
     };
     console.log(data);
     const res = await fetch(url, {
@@ -116,6 +132,8 @@ function Ngosignup() {
       alert("NGO registered Successfully!!!");
     }
   };
+
+
   return (
     <>
       <div className="container-fluid">
@@ -279,6 +297,9 @@ function Ngosignup() {
                     type="checkbox"
                     id="inlineCheckbox1"
                     value="option1"
+                    checked={isCloth}
+                    onChange={toggleCloth}
+                   
                   />
                   <label class="form-check-label" for="inlineCheckbox1">
                     Clothes
@@ -290,6 +311,8 @@ function Ngosignup() {
                     type="checkbox"
                     id="inlineCheckbox2"
                     value="option2"
+                    checked={isBook}
+                    onChange={toggleBook}
                   />
                   <label class="form-check-label" for="inlineCheckbox2">
                     Books
