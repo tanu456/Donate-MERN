@@ -8,19 +8,25 @@ function Signup() {
   const [item, setItem] = useState({
     fName: "",
     lName: "",
+    uName: "",
     email: "",
     password: "",
     confirmPassword: "",
     address: "",
+    city: "",
     phone: "",
+    aadharNumber: "",
     error: {
       fName: "",
       lName: "",
+      uName: "",
       email: "",
       password: "",
       confirmPassword: "",
       address: "",
+      city: "",
       phone: "",
+      aadharNumber: "",
     },
   });
 
@@ -34,13 +40,6 @@ function Signup() {
 
   const formSubmit = (e) => {
     e.preventDefault();
-  };
-
-  const getLocation = () => {
-    navigator.geolocation.getCurrentPosition(function (position) {
-      console.log("Latitude is :", position.coords.latitude);
-      console.log("Longitude is :", position.coords.longitude);
-    });
   };
 
   const inputEvent = (e) => {
@@ -64,6 +63,11 @@ function Signup() {
           value.length < 2 ? "Your last name is too small." : "";
         break;
 
+      case "uName":
+        item.error.uName =
+          value.length < 5 ? "Your user name is too small." : "";
+        break;
+
       case "email":
         item.error.email = validEmailRegex.test(value)
           ? ""
@@ -74,9 +78,18 @@ function Signup() {
         item.error.address = value.length < 10 ? "Invalid Address!!" : "";
         break;
 
+      case "city":
+        item.error.city = value.length < 3 ? "Your city is too small." : "";
+        break;
+
       case "phone":
         item.error.phone =
-          value.length < 10 ? "Phone number should contain ten digits." : "";
+          value.length != 10 ? "Phone number should contain ten digits." : "";
+        break;
+
+      case "aadharNumber":
+        item.error.aadharNumber =
+          value.length != 12 ? "Aadhar number should contain 12 digits." : "";
         break;
 
       case "password":
@@ -128,6 +141,20 @@ function Signup() {
               </div>
 
               <div class="mb-3">
+                <label class="form-label">User Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="userName"
+                  placeholder="Enter your User Name"
+                  name="uName"
+                  value={item.uName}
+                  onChange={inputEvent}
+                />
+                <h6 className="validation-text mt-2">{item.error.uName}</h6>
+              </div>
+
+              <div class="mb-3">
                 <label class="form-label">Address</label>
                 <input
                   type="text"
@@ -141,14 +168,18 @@ function Signup() {
                 <h6 className="validation-text mt-2">{item.error.address}</h6>
               </div>
 
-              <div className="mb-3">
-                <label class="form-label">Location</label>
-                <button
-                  className="btn btn-outline-dark btn-md ms-4"
-                  onClick={getLocation}
-                >
-                  Your Location
-                </button>
+              <div class="mb-3">
+                <label class="form-label">City</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="city"
+                  placeholder="Enter your City"
+                  name="city"
+                  value={item.city}
+                  onChange={inputEvent}
+                />
+                <h6 className="validation-text mt-2">{item.error.city}</h6>
               </div>
 
               <div class="mb-3">
@@ -163,6 +194,22 @@ function Signup() {
                   onChange={inputEvent}
                 />
                 <h6 className="validation-text mt-2">{item.error.phone}</h6>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Enter your Aadhar Number</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="aadharNumber"
+                  placeholder="Enter your Aadhar Number"
+                  name="aadharNumber"
+                  value={item.aadharNumber}
+                  onChange={inputEvent}
+                />
+                <h6 className="validation-text mt-2">
+                  {item.error.aadharNumber}
+                </h6>
               </div>
 
               <div class="mb-3">
