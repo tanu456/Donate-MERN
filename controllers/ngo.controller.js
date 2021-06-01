@@ -76,8 +76,8 @@ exports.createNgo = async (req, res, next) => {
     is_available: ngo_info.is_available,
     available_items: ngo_info.availableItems
   });
-  // logger.debug("NGO created", ngo);
-  
+  logger.debug("NGO created", ngo);
+
   try {
     const newNgo = await ngo.save();
     res.status(200).send({
