@@ -88,7 +88,6 @@ exports.register = async (req, res) => {
       msg: "Please enter all fields",
     });
   }
-
   try {
     //Email should be unique
     const user = await Users.findOne({ email: personal_info.email });
@@ -144,7 +143,7 @@ exports.register = async (req, res) => {
   } catch (err) {
     logger.error(err);
     res.status(500).json({ success: false, message: err.message });
-  }
+ }
 };
 
 exports.login = async (req, res) => {

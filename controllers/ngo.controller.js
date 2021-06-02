@@ -65,7 +65,7 @@ exports.createNgo = async (req, res, next) => {
   }
 
   //hashing password
-  ngo_info.password = bcrypt.hashSync(ngo_info.password, 10);
+  ngo_info.password = await bcrypt.hashSync(ngo_info.password, 10);
 
   const token = jwt.sign({ email: ngo_info.email }, process.env.SECRET, {
     expiresIn: "1d",
@@ -75,15 +75,15 @@ exports.createNgo = async (req, res, next) => {
     name: ngo_info.name,
     password: ngo_info.password,
     email: ngo_info.email,
-    phone_number: ngo_info.phone_number,
-    registration_number: ngo_info.registration_number,
+    phone_number: ngo_info.phoneNumber,
+    registration_number: ngo_info.registrationNumber,
     ngo_images: ngo_info.ngo_images,
     email_token: token,
     is_verified: false,
     location: ngo_info.location,
     address: ngo_info.address,
     is_available: ngo_info.is_available,
-    available_items: ngo_info.available_items,
+   available_items: ngo_info.available_items,
   });
   logger.debug("NGO created", ngo);
   //Email verification
@@ -105,7 +105,7 @@ exports.createNgo = async (req, res, next) => {
     });
     res.status(200).json({
       message: "NGO created Successfully",
-      ngo,
+      newNgo,
     });
   } catch (err) {
     logger.error(err);
