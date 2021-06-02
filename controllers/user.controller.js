@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 require("dotenv").config();
 const sgMail = require("@sendgrid/mail");
 const { config } = require("../config/auth.config");
+const logger = require("../utils/logger");
 
 //Make account on sendgrid and create api key and add in env file and verify sender
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
@@ -17,6 +18,7 @@ exports.getAllUsers = async (req, res, next) => {
     const users = await Users.find({});
     res.status(200).json({ success: true, users });
   } catch (err) {
+    logger.error(err);
     res.status(500).json({
       success: false,
       message: err.message || "Some error occurred while retrieving entries.",
@@ -31,6 +33,7 @@ exports.getUsersByQuery = async (req, res, next) => {
     const users = await Users.findOne(req.query);
     res.status(200).json({ success: true, users });
   } catch (err) {
+    logger.error(err);
     res.status(500).json({
       success: false,
       message: err.message || "Some error occurred while retrieving entries.",
@@ -47,6 +50,7 @@ exports.editUser = async (req, res, next) => {
     const users = await Users.updateOne(filter, changes);
     res.status(200).json({ success: true, users });
   } catch (err) {
+    logger.error(err);
     res.status(500).json({
       success: false,
       message: err.message || "Some error occurred while retrieving entries.",
@@ -61,6 +65,7 @@ exports.deleteUser = async (req, res, next) => {
     const response = await Users.deleteOne({ _id: req.params.id });
     res.status(200).json({ success: true, response });
   } catch (err) {
+    logger.error(err);
     res.status(500).json({
       success: false,
       message: err.message || "Some error occurred while retrieving entries.",
@@ -102,6 +107,7 @@ exports.register = async (req, res) => {
       expiresIn: "1d",
     });
 
+    logger.debug("Token:", token);
     // create and save user
     const newUser = new Users({
       name: personal_info.name,
@@ -116,6 +122,7 @@ exports.register = async (req, res) => {
     });
 
     newUser.save();
+    logger.debug("New user creation", newUser);
 
     //Email verification
     const url = "http://" + req.headers.host + "/api/v1/users/verify/" + token;
@@ -132,12 +139,11 @@ exports.register = async (req, res) => {
         url +
         "\n\nThank You!\n",
     });
-
-    console.log("Email sent Successfully");
+    logger.info("Verification email sent successfully");
     res.status(200).json({ success: true });
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).json({ success: false, message: error.message });
+  } catch (err) {
+    logger.error(err);
+    res.status(500).json({ success: false, message: err.message });
   }
 };
 
@@ -146,7 +152,7 @@ exports.login = async (req, res) => {
   const user = await Users.findOne({ username }).lean();
 
   if (!user) {
-    return res.json({ success: false, error: "Invalid username/password" });
+    return res.json({ success: false, message: "Invalid username/password" });
   }
 
   if (await bcrypt.compare(password, user.password)) {
@@ -169,7 +175,9 @@ exports.login = async (req, res) => {
     return res.status(200).json({ success: false, data: token, id: user._id });
   }
 
-  res.status(403).json({ success: false, error: "Invalid username/password" });
+  res
+    .status(403)
+    .json({ success: false, message: "Invalid username/password" });
 };
 
 //Verify the link sent on email
@@ -188,7 +196,7 @@ exports.verify = async (req, res) => {
     user.is_verified = true;
     user.email_token = undefined;
     await user.save();
-    console.log(user);
+    logger.debug("Verifying user", user);
     res.status(200).json({ success: true, message: "Verified Successfully" });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
