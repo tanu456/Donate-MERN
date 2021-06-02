@@ -85,7 +85,7 @@ function Ngosignup() {
         item.error.address = value.length < 10 ? "Invalid Address!!" : "";
         break;
       case "pincode":
-        item.error.pincode = value.length != 6 ? "Invalid Pincode!!" : "";
+        item.error.pincode = value.length !== 6 ? "Invalid Pincode!!" : "";
         break;
       case "pin_code":
         item.error.pin_code = value.length !== 6 ? "Invalid pincode" : "";

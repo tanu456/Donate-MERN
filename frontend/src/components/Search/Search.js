@@ -3,7 +3,7 @@ import "./Search.scss";
 class Search extends React.Component {
   state = {
     search: "",
-    selection: ""
+    selection: this.props.defaultValue
   }
 
   // Search input   
@@ -50,12 +50,9 @@ class Search extends React.Component {
             </ul>
           )}
         </div>
-        {selection && (
-          <p className="result">
-            <b>selection:</b>
-            {selection}
-          </p>
-        )}
+        <p className="result">
+          <b>{selection}</b>
+        </p>
       </div>
     )
   }

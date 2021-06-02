@@ -84,12 +84,12 @@ function Signup() {
 
       case "phone":
         item.error.phone =
-          value.length != 10 ? "Phone number should contain ten digits." : "";
+          value.length !== 10 ? "Phone number should contain ten digits." : "";
         break;
 
       case "aadharNumber":
         item.error.aadharNumber =
-          value.length != 12 ? "Aadhar number should contain 12 digits." : "";
+          value.length !== 12 ? "Aadhar number should contain 12 digits." : "";
         break;
 
       case "password":

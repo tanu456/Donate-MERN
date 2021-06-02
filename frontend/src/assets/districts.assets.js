@@ -720,7 +720,8 @@ const INDIAN_DISTRICTS = [
   "Purba Medinipur (East Medinipur)",
   "Purulia",
   "South 24 Parganas",
-  "Uttar Dinajpur (North Dinajpur)"
+  "Uttar Dinajpur (North Dinajpur)",
+  "India"
 ]
 
 const _INDIAN_DISTRICTS = INDIAN_DISTRICTS;
