@@ -55,15 +55,20 @@ exports.createNgo = async (req, res, next) => {
     !ngo_info.name ||
     !ngo_info.password ||
     !ngo_info.email ||
-    !ngo_info.phone_number ||
-    !ngo_info.registration_number
+    !ngo_info.phoneNumber ||
+    !ngo_info.registrationNumber
   ) {
     return res.status(404).json({
       success: false,
       message: "Please enter all required fields.",
     });
   }
-
+  if ( ngo_info.password != ngo_info.confirmPassword) {
+    return res.status(400).json({
+      success: false,
+      message: "Confirm password doesn't match with your password",
+    });
+  }
   //hashing password
   ngo_info.password = await bcrypt.hashSync(ngo_info.password, 10);
 
@@ -105,7 +110,7 @@ exports.createNgo = async (req, res, next) => {
     });
     res.status(200).json({
       message: "NGO created Successfully",
-      newNgo,
+      ngo,
     });
   } catch (err) {
     logger.error(err);

@@ -84,9 +84,6 @@ function Ngosignup() {
       case "address":
         item.error.address = value.length < 10 ? "Invalid Address!!" : "";
         break;
-      case "pincode":
-        item.error.pincode = value.length !== 6 ? "Invalid Pincode!!" : "";
-        break;
       case "pin_code":
         item.error.pin_code = value.length !== 6 ? "Invalid pincode" : "";
         break;
@@ -196,22 +193,6 @@ function Ngosignup() {
                   onChange={inputEvent}
                 />
                 <h6 className="validation-text mt-2">{item.error.address}</h6>
-              </div>
-
-              <div class="mb-3">
-                <label for="" class="form-label">
-                  Pincode
-                </label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="pincode"
-                  placeholder="Enter Pincode"
-                  name="pincode"
-                  value={item.pincode}
-                  onChange={inputEvent}
-                />
-                <h6 className="validation-text mt-2">{item.error.pincode}</h6>
               </div>
 
               <div className="mb-3">
