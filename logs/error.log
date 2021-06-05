@@ -1,6 +1,0 @@
- 
-2021-06-02T06:59:28.754Z [error]: Mongoose default connection error: MongoParseError: URI does not have hostname, domain name and tld
-2021-06-05T07:35:53.646Z [error]: NGOs validation failed: phone_number: Path `phone_number` is required., registration_number: Path `registration_number` is required.
-2021-06-05T07:36:23.537Z [error]: NGOs validation failed: phone_number: Path `phone_number` is required., registration_number: Path `registration_number` is required.
-2021-06-05T07:37:48.881Z [error]: NGOs validation failed: phone_number: Path `phone_number` is required., registration_number: Path `registration_number` is required.
-2021-06-05T07:39:35.473Z [error]: Unauthorized
