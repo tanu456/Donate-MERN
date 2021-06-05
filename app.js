@@ -9,7 +9,6 @@ const app = express();
 const morgan = require("morgan");
 const cors = require("cors");
 
-// create a write stream (in append mode)
 var accessLogStream = fs.createWriteStream(
   path.join(__dirname, "logs", "access.log")
 );

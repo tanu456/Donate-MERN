@@ -16,11 +16,11 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 exports.getAllUsers = async (req, res, next) => {
   try {
     const users = await Users.find({});
-    res.status(200).send(users);
+    res.status(200).json({ success: true, users });
   } catch (err) {
     logger.error(err);
-
-    res.status(500).send({
+    res.status(500).json({
+      success: false,
       message: err.message || "Some error occurred while retrieving entries.",
     });
   }
@@ -31,11 +31,11 @@ exports.getAllUsers = async (req, res, next) => {
 exports.getUsersByQuery = async (req, res, next) => {
   try {
     const users = await Users.findOne(req.query);
-    res.status(200).send(users);
+    res.status(200).json({ success: true, users });
   } catch (err) {
     logger.error(err);
-
-    res.status(500).send({
+    res.status(500).json({
+      success: false,
       message: err.message || "Some error occurred while retrieving entries.",
     });
   }
@@ -48,11 +48,11 @@ exports.editUser = async (req, res, next) => {
   const changes = req.body;
   try {
     const users = await Users.updateOne(filter, changes);
-    res.status(200).send(users);
+    res.status(200).json({ success: true, users });
   } catch (err) {
     logger.error(err);
-
-    res.status(500).send({
+    res.status(500).json({
+      success: false,
       message: err.message || "Some error occurred while retrieving entries.",
     });
   }
@@ -63,39 +63,37 @@ exports.editUser = async (req, res, next) => {
 exports.deleteUser = async (req, res, next) => {
   try {
     const response = await Users.deleteOne({ _id: req.params.id });
-    res.status(200).send(response);
+    res.status(200).json({ success: true, response });
   } catch (err) {
     logger.error(err);
-
-    res.status(500).send({
+    res.status(500).json({
+      success: false,
       message: err.message || "Some error occurred while retrieving entries.",
     });
   }
 };
 exports.register = async (req, res) => {
+  const personal_info = req.body;
+  if (
+    !personal_info ||
+    !personal_info.name ||
+    !personal_info.username ||
+    !personal_info.password ||
+    !personal_info.city ||
+    !personal_info.phone_number ||
+    !personal_info.aadhar_number
+  ) {
+    return res.status(404).json({
+      success: false,
+      msg: "Please enter all fields",
+    });
+  }
   try {
-    const personal_info = req.body;
-    if (
-      !personal_info ||
-      !personal_info.name ||
-      !personal_info.username ||
-      !personal_info.password ||
-      !personal_info.city ||
-      !personal_info.phone_number ||
-      !personal_info.aadhar_number
-    ) {
-      logger.info("Necessary fields not added for user registration");
-
-      return res.status(404).json({
-        success: false,
-        msg: "Please enter all fields",
-      });
-    }
-
     //Email should be unique
     const user = await Users.findOne({ email: personal_info.email });
     if (user)
       return res.status(401).json({
+        success: false,
         message:
           "The email address you have entered is already associated with another account.",
       });
@@ -104,10 +102,11 @@ exports.register = async (req, res) => {
     personal_info.password = bcrypt.hashSync(personal_info.password, 10);
 
     //generating token which will be used for verifying user
-    const token = jwt.sign({ email: personal_info.email }, config.secret, {
+    const token = jwt.sign({ email: personal_info.email }, process.env.SECRET, {
       expiresIn: "1d",
     });
 
+    logger.debug("Token:", token);
     // create and save user
     const newUser = new Users({
       name: personal_info.name,
@@ -128,7 +127,7 @@ exports.register = async (req, res) => {
     const url = "http://" + req.headers.host + "/api/v1/users/verify/" + token;
 
     await sgMail.send({
-      from: "ngo.donation.108@gmail.com",
+      from: process.env.SGMAIL_EMAIL,
       to: personal_info.email,
       subject: "Account Verification",
       text:
@@ -140,28 +139,26 @@ exports.register = async (req, res) => {
         "\n\nThank You!\n",
     });
     logger.info("Verification email sent successfully");
-
     res.status(200).json({ success: true });
-  } catch (error) {
+  } catch (err) {
     logger.error(err);
-    
-    res.status(500).json({ success: false, message: error.message });
-  }
+    res.status(500).json({ success: false, message: err.message });
+ }
 };
 
 exports.login = async (req, res) => {
   const { username, password } = req.body;
-  const user = await User.findOne({ username }).lean();
+  const user = await Users.findOne({ username }).lean();
 
   if (!user) {
-    return res.json({ status: "error", error: "Invalid username/password" });
+    return res.json({ success: false, message: "Invalid username/password" });
   }
 
   if (await bcrypt.compare(password, user.password)) {
     // the username, password combination is successful
     if (!user.is_verified) {
       return res.status(401).json({
-        type: "not-verified",
+        success: false,
         message: "Your account has not been verified.",
       });
     }
@@ -170,33 +167,37 @@ exports.login = async (req, res) => {
         id: user._id,
         username: user.username,
       },
-      config.secret,
+      process.env.SECRET,
       { expiresIn: "1d" }
     );
-    return res.json({ status: "ok", data: token });
+
+    return res.status(200).json({ success: false, data: token, id: user._id });
   }
-  res.json({ status: "error", error: "Invalid username/password" });
+
+  res
+    .status(403)
+    .json({ success: false, message: "Invalid username/password" });
 };
 
 //Verify the link sent on email
 exports.verify = async (req, res) => {
-  const token = req.headers["x-access-token"];
+  const token = req.params.id;
 
   if (!token)
-    return res
-      .status(400)
-      .json({ message: "We were unable to find a user for this token." });
+    return res.status(400).json({ success: false, message: "Token Missing" });
 
   try {
     const user = await Users.findOne({ email_token: token });
-    if (!user) {
-      return res.status(404).send("No user found.");
-    }
+    if (!user)
+      return res
+        .status(404)
+        .json({ success: false, message: "No user found." });
     user.is_verified = true;
+    user.email_token = undefined;
     await user.save();
     logger.debug("Verifying user", user);
-    res.status(200).send("Verified Successfully");
+    res.status(200).json({ success: true, message: "Verified Successfully" });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ success: false, message: error.message });
   }
 };
