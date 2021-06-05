@@ -24,6 +24,7 @@ const NGOSchema = new mongoose.Schema(
         item_count: { type: Number, default: 0 },
       },
     ],
+    description: { type: String, required: true }
   },
   {
     timestamps: true,

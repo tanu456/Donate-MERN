@@ -16,6 +16,7 @@ function Ngosignup() {
     password: "",
     confirmPassword: "",
     availableItems:"",
+    description: "",
     error: {
       name: "",
       email: "",
@@ -26,6 +27,7 @@ function Ngosignup() {
       pin_code: "",
       password: "",
       confirmPassword: "",
+      description: ""
     },
   });
   const [isCloth, setIsCloth] = useState(false);
@@ -107,12 +109,12 @@ function Ngosignup() {
       avbl.push({"category":"books"});
     if(isCloth)
       avbl.push({"category":"clothes"});
-    console.log(avbl);
     const data = 
     { name: item.name, email: item.email, 
       phoneNumber:item.phoneNumber, registrationNumber:item.registrationNumber, 
       location: { address: item.address, city: item.city, pin_code:item.pin_code }, 
-      password: item.password, confirmPassword: item.confirmPassword , availableItems:avbl
+      password: item.password, confirmPassword: item.confirmPassword , availableItems:avbl,
+      description: item.description
     };
     console.log(data);
     const res = await fetch(url, {
@@ -316,6 +318,15 @@ function Ngosignup() {
                     Books
                   </label>
                 </div>
+              </div>
+              <div class="mb-3">
+                <label for="" class="form-label">
+                  Description
+                </label>
+                <textarea cols="27" class="form-control" id="description" 
+                placeholder="Enter the NGO description" 
+                name="description" value= {item.description} 
+                onChange = {inputEvent}></textarea>
               </div>
               <div class="d-grid gap-2 mx-auto">
                 <button

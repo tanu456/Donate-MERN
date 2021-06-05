@@ -56,7 +56,8 @@ exports.createNgo = async (req, res, next) => {
     !ngo_info.password ||
     !ngo_info.email ||
     !ngo_info.phoneNumber ||
-    !ngo_info.registrationNumber
+    !ngo_info.registrationNumber ||
+    !ngo_info.description
   ) {
     return res.status(404).json({
       success: false,
@@ -88,7 +89,8 @@ exports.createNgo = async (req, res, next) => {
     location: ngo_info.location,
     address: ngo_info.address,
     is_available: ngo_info.is_available,
-   available_items: ngo_info.available_items,
+    available_items: ngo_info.available_items,
+    description: ngo_info.description
   });
   logger.debug("NGO created", ngo);
   //Email verification
