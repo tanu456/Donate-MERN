@@ -7,7 +7,7 @@ const { db } = require("./config/db");
 const dbURI = `mongodb+srv://${db.user}:${encodeURIComponent(db.password)}@${
   db.host
 }/${db.name}`;
-const url ='mongodb://127.0.0.1:27017/donate'
+
 const options = {
   useNewUrlParser: true,
   useCreateIndex: true,
@@ -24,7 +24,7 @@ logger.info("Database Url : ", dbURI);
 
 //Create the databse connection
 try {
-  mongoose.connect(url, options);
+  mongoose.connect(dbURI, options);
   logger.info("Mongoose connection done");
 } catch (err) {
   logger.error("Mongoose connection error", err);
