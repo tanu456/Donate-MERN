@@ -55,8 +55,8 @@ exports.createNgo = async (req, res, next) => {
     !ngo_info.name ||
     !ngo_info.password ||
     !ngo_info.email ||
-    !ngo_info.phoneNumber ||
-    !ngo_info.registrationNumber
+    !ngo_info.phone_number ||
+    !ngo_info.registration_number
   ) {
     return res.status(404).json({
       success: false,
