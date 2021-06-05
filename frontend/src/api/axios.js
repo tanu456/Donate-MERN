@@ -8,34 +8,40 @@ export const BASE_API_URL =
 const instance = axios.create({
   baseURL: BASE_API_URL,
   timeout: 5000,
-  headers: {}, // add headers if you want 
+  headers: {}, // add headers if you want
 });
 
-// request interceptor 
-instance.interceptors.request.use(function (request) {
-    //add header before every request 
-    request.headers['x-access-token']= localStorage.getItem("token");
+// request interceptor
+instance.interceptors.request.use(
+  function (request) {
+    //add header before every request
+    request.headers["x-access-token"] = localStorage.getItem("token");
     return request;
-}, function (error) {
-    console.log("API ERROR : "  + error );
+  },
+  function (error) {
+    console.log("API ERROR : " + error);
     return Promise.reject(error);
-});
+  }
+);
 
 // response interceptor
 // Add a response interceptor
-axios.interceptors.response.use(function (response) {
+axios.interceptors.response.use(
+  function (response) {
     // Any status code that lie within the range of 2xx cause this function to trigger
-    console.log( response);
-    if( response.token ) {
-        localStorage.setItem("token",response.token);
+    console.log(response);
+    if (response.token) {
+      localStorage.setItem("token", response.token);
     }
-    if( response.id)
+    if (response.id) {
+      localStorage.setItem("id", response.id);
+    }
     return response;
-  }, function (error) {
+  },
+  function (error) {
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     return Promise.reject(error);
-  });
-
-// axios.defaults.headers.common["x-access-token"] = localStorage.getItem("token");
+  }
+);
 
 export default instance;
