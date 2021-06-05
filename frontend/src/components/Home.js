@@ -3,10 +3,12 @@
 import React from "react";
 import homeImg from "./images/Homeimage.png";
 import { NavLink } from "react-router-dom";
+import HomeCarousel from "./Carousel/HomeCarousel";
 
 const Home = () => {
   return (
     <>
+      <HomeCarousel/>
       <section id="header" className="d-flex align-items-center">
         <div className="container-fluid nav-bg">
           <div className="row">
