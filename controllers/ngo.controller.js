@@ -55,8 +55,8 @@ exports.createNgo = async (req, res, next) => {
     !ngo_info.name ||
     !ngo_info.password ||
     !ngo_info.email ||
-    !ngo_info.phone_number ||
-    !ngo_info.registration_number
+    !ngo_info.phoneNumber ||
+    !ngo_info.registrationNumber
   ) {
     return res.status(404).json({
       success: false,
@@ -155,7 +155,7 @@ exports.login = async (req, res) => {
       process.env.SECRET,
       { expiresIn: "1d" }
     );
-    return res.json({ success: true, data: token, id: ngo._id });
+    return res.json({ success: true, token: token, id: ngo._id });
   }
   return res.json({ success: true, error: "Invalid username/password" });
 };

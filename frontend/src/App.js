@@ -13,8 +13,12 @@ import Footer from "./components/Footer";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
 import Ngosignup from "./components/Ngosignup";
+import API from './api/axios'
 
 const App = () => {
+
+  const p =  API.get('/');
+
   return (
     <>
       <Navbar />
