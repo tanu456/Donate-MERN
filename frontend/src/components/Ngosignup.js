@@ -9,30 +9,49 @@ function Ngosignup() {
     name: "",
     email: "",
     phoneNumber: "",
-    registerationNumber: "",
+    registrationNumber: "",
     address: "",
     city: "",
+    pin_code: "",
     password: "",
     confirmPassword: "",
+    availableItems:"",
     error: {
       name: "",
       email: "",
       phoneNumber: "",
-      registerationNumber: "",
+      registrationNumber: "",
       address: "",
       city: "",
+      pin_code: "",
       password: "",
       confirmPassword: "",
     },
   });
+  const [isCloth, setIsCloth] = useState(false);
+  const [isBook, setIsBook] = useState(false);
+  const toggleCloth = () => {
+    setIsCloth(!isCloth);
+  };
+  const toggleBook = () => {
+    setIsBook(!isBook);
+  };
 
   const formSubmit = (e) => {
     e.preventDefault();
   };
 
+  const getLocation = () => {
+    navigator.geolocation.getCurrentPosition(function (position) {
+      console.log("Latitude is :", position.coords.latitude);
+      console.log("Longitude is :", position.coords.longitude);
+    });
+  };
+
   const validEmailRegex = RegExp(
     /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
   );
+
 
   const inputEvent = (e) => {
     const { name, value } = e.target;
@@ -58,15 +77,15 @@ function Ngosignup() {
         item.error.phoneNumber =
           value.length < 10 ? "Phone number should contain ten digits." : "";
         break;
-      case "registerationNumber":
-        item.error.registerationNumber =
-          value.length < 10 ? "Invalid registeration number" : "";
-        break;
+      // case "registrationNumber":
+      //   item.error.registrationNumber =
+      //     value.length < 10 ? "Invalid registration number" : "";
+        // break;
       case "address":
         item.error.address = value.length < 10 ? "Invalid Address!!" : "";
         break;
-      case "city":
-        item.error.city = value.length < 2 ? "Invalid city!!" : "";
+      case "pin_code":
+        item.error.pin_code = value.length !== 6 ? "Invalid pincode" : "";
         break;
       case "password":
         item.error.password =
@@ -80,6 +99,45 @@ function Ngosignup() {
         break;
     }
   };
+  const registerHandler = async (e) => {
+    const url = "http://localhost:5000/api/v1/ngos/create";
+    e.preventDefault();
+    const avbl = [];
+    if(isBook)
+      avbl.push({"category":"books"});
+    if(isCloth)
+      avbl.push({"category":"clothes"});
+    console.log(avbl);
+    const data = 
+    { name: item.name, email: item.email, 
+      phoneNumber:item.phoneNumber, registrationNumber:item.registrationNumber, 
+      location: { address: item.address, city: item.city, pin_code:item.pin_code }, 
+      password: item.password, confirmPassword: item.confirmPassword , availableItems:avbl
+    };
+    console.log(data);
+    const res = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json"
+      },
+      body: JSON.stringify(data),
+    });
+    console.log(res);
+    if(res.status === 500 || !res){
+      alert("Some error occurred");
+    }
+    else if(res.status === 404){
+      alert("Please enter all required fields.");
+    }
+    else if(res.status === 400){
+      alert("Your password and confirmation password do not match");
+    }
+    else{
+      alert("NGO registered Successfully!!!");
+    }
+  };
+
+
   return (
     <>
       <div className="container-fluid">
@@ -137,37 +195,47 @@ function Ngosignup() {
                 <h6 className="validation-text mt-2">{item.error.address}</h6>
               </div>
 
-              <div class="mb-3">
-                <label for="" class="form-label">
-                  City
-                </label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="city"
-                  placeholder="Enter your city"
-                  name="city"
-                  value={item.city}
-                  onChange={inputEvent}
-                />
-                <h6 className="validation-text mt-2">{item.error.city}</h6>
+              <div className="mb-3">
+                <label class="form-label">Location</label>
+                <button
+                  className="btn btn-outline-dark btn-md ms-4"
+                  onClick={getLocation}
+                >
+                  Your Location
+                </button>
               </div>
 
               <div class="mb-3">
                 <label for="" class="form-label">
-                  NGO Registeration Number
+                  Pin Code
+                </label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="pin_code"
+                  placeholder="Enter pin code"
+                  name="pin_code"
+                  value={item.pin_code}
+                  onChange={inputEvent}
+                />
+                <h6 className="validation-text mt-2">{item.error.pin_code}</h6>
+              </div>
+
+              <div class="mb-3">
+                <label for="" class="form-label">
+                  NGO Registration Number
                 </label>
                 <input
                   type="text"
                   class="form-control"
                   id="regName"
-                  placeholder="Enter your NGO Registeration Number"
-                  name="registerationNumber"
-                  value={item.registerationNumber}
+                  placeholder="Enter your NGO Registration Number"
+                  name="registrationNumber"
+                  value={item.registrationNumber}
                   onChange={inputEvent}
                 />
                 <h6 className="validation-text mt-2">
-                  {item.error.registerationNumber}
+                  {item.error.registrationNumber}
                 </h6>
               </div>
 
@@ -227,6 +295,9 @@ function Ngosignup() {
                     type="checkbox"
                     id="inlineCheckbox1"
                     value="option1"
+                    checked={isCloth}
+                    onChange={toggleCloth}
+                   
                   />
                   <label class="form-check-label" for="inlineCheckbox1">
                     Clothes
@@ -238,6 +309,8 @@ function Ngosignup() {
                     type="checkbox"
                     id="inlineCheckbox2"
                     value="option2"
+                    checked={isBook}
+                    onChange={toggleBook}
                   />
                   <label class="form-check-label" for="inlineCheckbox2">
                     Books
@@ -248,7 +321,7 @@ function Ngosignup() {
                 <button
                   class="btn btn-dark btn-lg mt-3"
                   type="button"
-                  // onClick={registerClicked}
+                  onClick={registerHandler}
                 >
                   Register
                 </button>
