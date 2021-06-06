@@ -12,6 +12,7 @@ const UserSchema = new mongoose.Schema(
       { type: mongoose.Schema.Types.ObjectId, ref: "Donations" }
     ],
     aadhar_number: { type: String, required: true, unique: true },
+    address: { type: String },
     is_verified: { type: Boolean, default: false },
     email_token: { type: String },
   },
