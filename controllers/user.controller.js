@@ -88,6 +88,12 @@ exports.register = async (req, res) => {
       msg: "Please enter all fields",
     });
   }
+  if (personal_info.password !== personal_info.confirmPassword){
+    return res.status(400).json({
+      success: false,
+      msg: "Your password and confirmation password do not match",
+    });
+  }
   try {
     //Email should be unique
     const user = await Users.findOne({ email: personal_info.email });
@@ -118,6 +124,7 @@ exports.register = async (req, res) => {
       phone_number: personal_info.phone_number,
       donated_items: personal_info.donated_items,
       aadhar_number: personal_info.aadhar_number,
+      address: personal_info.address
     });
 
     newUser.save();

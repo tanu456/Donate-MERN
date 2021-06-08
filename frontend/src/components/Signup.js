@@ -30,8 +30,38 @@ function Signup() {
     },
   });
 
-  const showMessage = () => {
-    alert("logged in...");
+  const registerHandler = async (e) => {
+    const url = "http://localhost:5000/api/v1/users/register";
+    e.preventDefault();
+    const data = 
+    { name: item.fName+' '+item.lName, username: item.uName,
+      email: item.email, 
+      phone_number: item.phone,
+      city: item.city, aadhar_number: item.aadharNumber,
+      address: item.address, 
+      password: item.password, confirmPassword: item.confirmPassword
+    };
+    console.log(data);
+    const res = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json"
+      },
+      body: JSON.stringify(data),
+    });
+    console.log(res);
+    if(res.status === 500 || !res){
+      alert("Some error occurred");
+    }
+    else if(res.status === 404){
+      alert("Please enter all required fields.");
+    }
+    else if(res.status === 400){
+      alert("Your password and confirmation password do not match");
+    }
+    else{
+      alert("User registered Successfully!!!");
+    }
   };
 
   const validEmailRegex = RegExp(
@@ -183,7 +213,7 @@ function Signup() {
               </div>
 
               <div class="mb-3">
-                <label class="form-label">Enter your Phone Number</label>
+                <label class="form-label">Phone Number</label>
                 <input
                   type="text"
                   class="form-control"
@@ -197,7 +227,7 @@ function Signup() {
               </div>
 
               <div class="mb-3">
-                <label class="form-label">Enter your Aadhar Number</label>
+                <label class="form-label">Aadhar Number</label>
                 <input
                   type="text"
                   class="form-control"
@@ -260,7 +290,7 @@ function Signup() {
                 <button
                   class="btn btn-dark btn-lg mt-3"
                   type="button"
-                  onClick={showMessage}
+                  onClick={registerHandler}
                 >
                   Register
                 </button>
