@@ -95,15 +95,45 @@ exports.register = async (req, res) => {
     });
   }
   try {
-    //Email should be unique
-    const user = await Users.findOne({ email: personal_info.email });
-    if (user)
-      return res.status(401).json({
-        success: false,
-        message:
-          "The email address you have entered is already associated with another account.",
+    //email,username,phone_number,aadhar_number should be unique
+    const users = await Users.find({ $or: [ 
+      { email: personal_info.email },
+      { username: personal_info.username },
+      { phone_number: personal_info.phone_number },
+      { aadhar_number: personal_info.aadhar_number }
+      ] 
       });
-
+    logger.info(users);
+    for (let user of users) {
+      if (user.email == personal_info.email) {
+        return res.status(401).json({
+              success: false,
+              message:
+                "The email address you have entered is already associated with another account.",
+            });
+      }
+      if (user.username == personal_info.username) {
+        return res.status(401).json({
+              success: false,
+              message:
+                "The username you have entered is already associated with another account.",
+            });
+      }
+      if (user.phone_number == personal_info.phone_number) {
+        return res.status(401).json({
+              success: false,
+              message:
+                "The phone number you have entered is already associated with another account.",
+            });
+      }
+      if (user.aadhar_number == personal_info.aadhar_number) {
+        return res.status(401).json({
+              success: false,
+              message:
+                "The aadhar number you have entered is already associated with another account.",
+            });
+      }
+    }
     //hashing password
     personal_info.password = bcrypt.hashSync(personal_info.password, 10);
 

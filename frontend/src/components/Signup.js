@@ -60,7 +60,7 @@ function Signup() {
       alert("Your password and confirmation password do not match");
     }
     else{
-      alert("User registered Successfully!!!");
+      alert("Click on the verification link send via email to complete the Registration.");
     }
   };
 
