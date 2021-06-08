@@ -160,7 +160,7 @@ exports.login = async (req, res) => {
       process.env.SECRET,
       { expiresIn: "1d" }
     );
-    return res.json({ success: true, data: token, id: ngo._id });
+    return res.json({ success: true, token: token, id: ngo._id });
   }
   return res.json({ success: true, error: "Invalid username/password" });
 };
