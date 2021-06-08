@@ -4,7 +4,7 @@ const fs = require("fs");
 const bodyParser = require("body-parser");
 const logger = require("./utils/logger");
 
-require("dotenv").config({ path: __dirname + "/.env" });
+require("dotenv").config({path: __dirname + "/.env" });
 const app = express();
 const morgan = require("morgan");
 const cors = require("cors");
