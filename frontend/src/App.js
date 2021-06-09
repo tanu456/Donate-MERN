@@ -18,17 +18,19 @@ const App = () => {
   return (
     <>
       <Navbar />
-      <Switch>
-        <Route exact path="/" render={() => <Home />} />
-        <Route exact path="/about" render={() => <About />} />
-        <Route exact path="/cases" render={() => <Cases />} />
-        <Route exact path="/ngo" render={() => <Ngo />} />
-        <Route exact path="/contact" render={() => <Contact />} />
-        <Route exact path="/signup" render={() => <Signup />} />
-        <Route exact path="/login" render={() => <Login />} />
-        <Route exact path="/ngosignup" render={() => <Ngosignup />} />
-        <Redirect to="/" />
-      </Switch>
+      <div className="main-content">
+        <Switch>
+          <Route exact path="/" render={() => <Home />} />
+          <Route exact path="/about" render={() => <About />} />
+          <Route exact path="/cases" render={() => <Cases />} />
+          <Route exact path="/ngo" render={() => <Ngo />} />
+          <Route exact path="/contact" render={() => <Contact />} />
+          <Route exact path="/signup" render={() => <Signup />} />
+          <Route exact path="/login" render={() => <Login />} />
+          <Route exact path="/ngosignup" render={() => <Ngosignup />} />
+          <Redirect to="/" />
+        </Switch>
+      </div>
       <Footer />
     </>
   );
