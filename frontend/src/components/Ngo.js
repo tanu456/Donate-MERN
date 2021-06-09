@@ -5,9 +5,7 @@ import Search from "./Search/Search";
 
 import { INDIAN_DISTRICTS } from "../assets/districts.assets";
 import { CATEGORIES } from "../assets/category.assets";
-// import Pickup from "./Pickup/Pickup";
-import Modal from "./Modal/Modal";
-import Backdrop from "./Backdrop/Backdrop";
+import Donate from "./Donate/Donate";
 
 class Ngo extends React.Component {
   constructor(props) {
@@ -44,39 +42,7 @@ class Ngo extends React.Component {
         {
           this.state.viewForm ?
           <div>
-            <Backdrop />
-            <Modal
-              title="Request pickup"
-              canCancel
-              canConfirm
-              confirmText="Confirm"
-              cancelText="Cancel"
-              onCancel={this.cancelHandler}
-              onConfirm={this.confirmHandler}
-            >
-              <form>
-                <div className="form-input">
-                  <label htmlFor="address">address</label>
-                  <input type="address" id="address" ref={this.addressElement} />
-                </div>
-                <div className="form-input">
-                  <label htmlFor="city">city</label>
-                  <input type="city" id="city" ref={this.cityElement} />
-                </div>
-                <div className="form-input">
-                  <label htmlFor="pincode">pincode</label>
-                  <input type="pincode" id="pincode" ref={this.pincodeElement} />
-                </div>
-                <div className="form-input">
-                  <label htmlFor="category">category</label>
-                  <input type="category" id="category" ref={this.categoryElement} />
-                </div>
-                <div className="form-input">
-                  <label htmlFor="count">count</label>
-                  <input type="count" id="count" ref={this.countElement} />
-                </div>
-              </form>
-            </Modal>
+            <Donate />
           </div>
           :
           <div className="container-fluid">
@@ -90,7 +56,7 @@ class Ngo extends React.Component {
               </div>
               <div className="row justify-content-around mt-4 g-lg-3">
                 {Ngodata.map((value, index) => {
-                  return <Card imgsrc={value.imgsrc} ngoName={value.ngoName} handler={this.formHandler} />;
+                  return <Card imgsrc={value.imgsrc} ngoName={value.ngoName} handler={this.formHandler} key={value.ngoName} />;
                 })}
               </div>
             </div>
