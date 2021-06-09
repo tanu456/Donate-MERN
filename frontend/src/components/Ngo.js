@@ -15,12 +15,26 @@ function Ngo() {
             <h1 className="text-center">Our NGOs</h1>
           </div>
           <div className="search">
-            <Search searchHeader="City" dataset={INDIAN_DISTRICTS} defaultValue="India" />
-            <Search searchHeader="Category" dataset={CATEGORIES} defaultValue="All" />
+            <Search
+              searchHeader="City"
+              dataset={INDIAN_DISTRICTS}
+              defaultValue="India"
+            />
+            <Search
+              searchHeader="Category"
+              dataset={CATEGORIES}
+              defaultValue="All"
+            />
           </div>
           <div className="row justify-content-around mt-4 g-lg-3">
             {Ngodata.map((value, index) => {
-              return <Card imgsrc={value.imgsrc} ngoName={value.ngoName} />;
+              return (
+                <Card
+                  key={index}
+                  imgsrc={value.imgsrc}
+                  ngoName={value.ngoName}
+                />
+              );
             })}
           </div>
         </div>

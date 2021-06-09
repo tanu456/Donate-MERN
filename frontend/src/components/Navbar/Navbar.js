@@ -118,6 +118,43 @@ const Navbar = () => {
                         </li>
                       </ul>
                     </li>
+                    {/*  */}
+                    <li className="nav-item dropdown">
+                      <NavLink
+                        className="nav-link dropdown-toggle"
+                        to="/"
+                        id="navbarDropdown"
+                        role="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                      >
+                        Login
+                      </NavLink>
+                      <ul
+                        className="dropdown-menu"
+                        aria-labelledby="navbarDropdown"
+                      >
+                        <li>
+                          <NavLink
+                            className="dropdown-item dropdown-link"
+                            to="/login"
+                          >
+                            User Login
+                          </NavLink>
+                        </li>
+                        <li>
+                          <hr className="dropdown-divider" />
+                        </li>
+                        <li>
+                          <NavLink
+                            className="dropdown-item dropdown-link"
+                            to="/login"
+                          >
+                            NGO Login
+                          </NavLink>
+                        </li>
+                      </ul>
+                    </li>
                   </ul>
                 </div>
               </div>

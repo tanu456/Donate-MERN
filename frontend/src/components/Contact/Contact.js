@@ -61,16 +61,18 @@ function Contact() {
     const res = await fetch(url, {
       method: "POST",
       headers: {
-        "Content-type": "application/json"
+        "Content-type": "application/json",
       },
       body: JSON.stringify({
-        fullName, phoneNo, email, query
-      })
+        fullName,
+        phoneNo,
+        email,
+        query,
+      }),
     });
-    if(res.status === 500 || !res){
+    if (res.status === 500 || !res) {
       alert("Some error occurred");
-    }
-    else{
+    } else {
       alert("Form Submitted Successfully!!!");
     }
   };
@@ -82,15 +84,18 @@ function Contact() {
       </div>
       <div className="container contact_div">
         <div className="row">
-          <div className="col-md-6 col-10 mx-auto">
+          <div className="col-md-8 col-10 mx-auto">
             <form onSubmit={formSubmit}>
-              <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">
+              <div className="mb-3">
+                <label
+                  htmlFor="exampleFormControlInput1"
+                  className="form-label"
+                >
                   Full Name
                 </label>
                 <input
                   type="text"
-                  class="form-control"
+                  className="form-control"
                   id="exampleFormControlInput1"
                   name="fullName"
                   value={input.fullName}
@@ -100,13 +105,16 @@ function Contact() {
                 <h6 className="validation-text mt-2">{input.error.fullName}</h6>
               </div>
 
-              <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">
+              <div className="mb-3">
+                <label
+                  htmlFor="exampleFormControlInput1"
+                  className="form-label"
+                >
                   PhoneNo
                 </label>
                 <input
                   type="text"
-                  class="form-control"
+                  className="form-control"
                   id="exampleFormControlInput1"
                   name="phoneNo"
                   value={input.phoneNo}
@@ -116,13 +124,16 @@ function Contact() {
                 <h6 className="validation-text mt-2">{input.error.phoneNo}</h6>
               </div>
 
-              <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">
+              <div className="mb-3">
+                <label
+                  htmlFor="exampleFormControlInput1"
+                  className="form-label"
+                >
                   Email address
                 </label>
                 <input
                   type="email"
-                  class="form-control"
+                  className="form-control"
                   id="exampleFormControlInput1"
                   name="email"
                   value={input.email}
@@ -132,12 +143,15 @@ function Contact() {
                 <h6 className="validation-text mt-2">{input.error.email}</h6>
               </div>
 
-              <div class="mb-3">
-                <label for="exampleFormControlTextarea1" class="form-label">
+              <div className="mb-3">
+                <label
+                  htmlFor="exampleFormControlTextarea1"
+                  className="form-label"
+                >
                   Your Query
                 </label>
                 <textarea
-                  class="form-control"
+                  className="form-control"
                   id="exampleFormControlTextarea1"
                   rows="3"
                   name="query"
@@ -148,9 +162,9 @@ function Contact() {
                 <h6 className="validation-text mt-2">{input.error.query}</h6>
               </div>
 
-              <div class="col-12">
+              <div className="col-12">
                 <button
-                  class="btn btn-primary"
+                  className="btn btn-primary"
                   type="submit"
                   onClick={submitHandler}
                 >
