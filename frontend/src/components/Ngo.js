@@ -4,6 +4,7 @@ import Search from "./Search/Search";
 
 import { INDIAN_DISTRICTS } from "../assets/districts.assets";
 import { CATEGORIES } from "../assets/category.assets";
+
 // import getAllNgos from '../api/ngo-api';
 import { getAllNgos } from "../api/ngo-api";
 function Ngo() {

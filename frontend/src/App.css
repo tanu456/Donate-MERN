@@ -146,3 +146,7 @@ body {
 .about-image {
   max-width: 300px;
 }
+
+.main-content {
+  margin: 4rem 2.5rem;
+}
