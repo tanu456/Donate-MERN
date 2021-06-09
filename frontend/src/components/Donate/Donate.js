@@ -1,41 +1,96 @@
-import React from "react";
+import React, {useState} from "react";
 
 import "./Donate.css";
 import { CATEGORIES } from "../../assets/category.assets";
 
-const Donate = () => {
+const Donate = (props) => {
+  const [input, setInput] = useState({
+    address: "",
+    city: "",
+    pincode: "",
+    category: CATEGORIES[0],
+    count: 0,
+  });
+
+  const formSubmit = (e) => {
+    e.preventDefault();
+  };
+
+  const handleInput = (e) => {
+    e.preventDefault();
+    const { name, value } = e.target;
+    console.log(name, value);
+    setInput((preValue) => {
+      return {
+        ...preValue,
+        [name]: value,
+      };
+    });
+  };
+
+  const submitHandler = async (e) => {
+    const url = "http://localhost:5000/api/v1/request";
+    e.preventDefault();
+    
+    const { address, city, pincode, category, count } = input;
+    const ngoId = props.ngoId;
+    const location = {
+      address, city, pincode,
+    };
+    const items = {
+      category,
+      item_count: count,
+    };
+
+    const res = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json"
+      },
+      body: JSON.stringify({
+        ngoId, location, items,
+      })
+    });
+    if(res.status === 500 || !res){
+      alert("Some error occurred");
+    }
+    else{
+      alert("Request Submitted Successfully!!!");
+    }
+  };
+
   return (
-    <form>
+    <form onSubmit={formSubmit}>
       <div className="form-group form-field">
-        <label for="inputAddress">Your current address</label>
-        <input type="text" class="form-control" id="inputAddress" aria-describedby="addressHelp" placeholder="Address" />
-        <small id="addressHelp" class="form-text text-muted">We'll never share your address with anyone else.</small>
+        <label htmlFor="inputAddress">Your current address</label>
+        <input onChange={handleInput} name="address" type="text" className="form-control" id="inputAddress" aria-describedby="addressHelp" placeholder="Address" />
+        <small id="addressHelp" className="form-text text-muted">We'll never share your address with anyone else.</small>
       </div>
-      <div class="form-group form-field">
-        <label for="inputCity">City</label>
-        <input type="text" class="form-control" id="inputCity" placeholder="City" />
+      <div className="form-group form-field">
+        <label htmlFor="inputCity">City</label>
+        <input onChange={handleInput} name="city" type="text" className="form-control" id="inputCity" placeholder="City" />
       </div>
-      <div class="form-group form-field">
-        <label for="inputPincode">Pincode</label>
-        <input type="text" class="form-control" id="inputPincode" placeholder="Pincode" />
+      <div className="form-group form-field">
+        <label htmlFor="inputPincode">Pincode</label>
+        <input onChange={handleInput} name="pincode" type="text" className="form-control" id="inputPincode" placeholder="Pincode" />
       </div>
-      <div class="input-group mb-3">
-        <div class="input-group-prepend select-label">
-          <label class="input-group-text" for="inputCategory">Category</label>
+      <div className="input-group mb-3">
+        <div className="input-group-prepend select-label">
+          <label className="input-group-text" htmlFor="inputCategory">Category</label>
         </div>
-        <select class="custom-select" id="inputCategory">
+        <select onChange={handleInput} name="category" className="custom-select" id="inputCategory">
           {CATEGORIES.map(category => {
             return (
-              <option value={category.toLowerCase()}>{category}</option>
+              <option value={category.toLowerCase()} key={category.toLowerCase()}>{category}</option>
             )
           })}
         </select>
       </div>
-      <div class="form-group form-field">
-        <label for="inputCount">Count</label>
-        <input type="number" class="form-control" id="inputCount" placeholder="Count" />
+      <div className="form-group form-field">
+        <label htmlFor="inputCount">Count</label>
+        <input onChange={handleInput} name="count" type="number" className="form-control" id="inputCount" placeholder="Count" />
       </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <button type="submit" className="btn btn-primary" onClick={submitHandler}>Submit</button>
     </form>
   );
 };

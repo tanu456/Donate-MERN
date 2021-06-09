@@ -13,6 +13,7 @@ import Footer from "./components/Footer";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
 import Ngosignup from "./components/Ngosignup";
+import Donate from "./components/Donate/Donate";
 
 const App = () => {
   return (
@@ -25,6 +26,7 @@ const App = () => {
           <Route exact path="/cases" render={() => <Cases />} />
           <Route exact path="/ngo" render={() => <Ngo />} />
           <Route exact path="/contact" render={() => <Contact />} />
+          <Route exact path="/donate" render={() => <Donate />} />
           <Route exact path="/signup" render={() => <Signup />} />
           <Route exact path="/login" render={() => <Login />} />
           <Route exact path="/ngosignup" render={() => <Ngosignup />} />

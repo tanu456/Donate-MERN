@@ -6,7 +6,7 @@ const DonationSchema = new mongoose.Schema({
   location: {
     address: { type: String },
     city: { type: String },
-    pin_code: { type: Number },
+    pincode: { type: Number },
     lattitude: { type: String },
     longitude: { type: String },
   },

@@ -11,10 +11,10 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 // @desc    Request for donate
 // @route   POST /api/v1/request
 exports.request = async (req, res, next) => {
-  const user = await Users.findOne({username : req.body.username});
+  const user = await Users.findOne({_id : req.body.userId});
   logger.debug("Donation User", user);
 
-  const ngo = await NGOs.findOne({name : req.body.ngo})
+  const ngo = await NGOs.findOne({_id : req.body.ngoId})
   logger.debug("Donation NGO", ngo);
 
   const donation = new Donation({
@@ -22,8 +22,7 @@ exports.request = async (req, res, next) => {
     ngo: ngo._id,
     location: req.body.location,
     current_state: req.body.current_state,
-    item_images: req.body.item_images,
-    pickup_person: req.body.pickup_person,
+    // item_images: req.body.item_images,
     items: req.body.items,
   });
   logger.debug("Donation", donation);

@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 
 class Card extends React.Component {
   render() {
@@ -13,7 +14,10 @@ class Card extends React.Component {
                 Some quick example text to build on the card title and make up the
                 bulk of the card's content.
               </p>
-              <button className="btn btn-primary" onClick={this.props.handler}>Donate Now</button>
+              <NavLink
+                to="/donate"
+                className="btn btn-outline-success btn-get-started"
+              >Donate Now</NavLink>
             </div>
           </div>
         </div>
