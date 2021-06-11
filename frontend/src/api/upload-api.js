@@ -4,8 +4,8 @@ import { storage } from "../config/firebase";
 /* arguments : file to upload */
 export const uploadImage = (data) => {
   return new Promise((resolve, reject) => {
-    // const userId = localStorage.getItem("id");
-    const userId = "123";
+    const userId = localStorage.getItem("id");
+    
     if (userId == null) {
       reject(new Error("UserId is required."));
     } else {
