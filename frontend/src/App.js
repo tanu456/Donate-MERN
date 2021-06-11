@@ -13,6 +13,8 @@ import Footer from "./components/Footer";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
 import Ngosignup from "./components/Ngosignup";
+import NgoDashboard from "./components/Profile/NgoDashboard";
+import UserDashboard from "./components/Profile/UserDashboard";
 
 const App = () => {
   return (
@@ -27,6 +29,9 @@ const App = () => {
         <Route exact path="/signup" render={() => <Signup />} />
         <Route exact path="/login" render={() => <Login />} />
         <Route exact path="/ngosignup" render={() => <Ngosignup />} />
+        <Route exact path="/ngoprofile" render={() => <NgoDashboard />} />
+        <Route exact path="/userprofile" render={() => <UserDashboard />} />
+
         <Redirect to="/" />
       </Switch>
       <Footer />
