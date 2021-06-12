@@ -22,6 +22,7 @@
     "morgan": "^1.10.0",
     "nodemailer": "^6.6.0",
     "nodemon": "^2.0.7",
+    "react-elastic-carousel": "^0.11.5",
     "winston": "^3.3.3"
   }
 }
