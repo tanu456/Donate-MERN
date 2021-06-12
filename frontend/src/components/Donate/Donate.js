@@ -33,7 +33,8 @@ const Donate = (props) => {
     e.preventDefault();
     
     const { address, city, pincode, category, count } = input;
-    const ngoId = props.ngoId;
+    const ngoName = props.location.aboutProps.ngoName;
+    const userId = localStorage.getItem("id");
     const location = {
       address, city, pincode,
     };
@@ -48,14 +49,14 @@ const Donate = (props) => {
         "Content-type": "application/json"
       },
       body: JSON.stringify({
-        ngoId, location, items,
+        userId, ngoName, location, items,
       })
     });
     if(res.status === 500 || !res){
       alert("Some error occurred");
     }
     else{
-      alert("Request Submitted Successfully!!!");
+      alert("Request Submitted Successfully!");
     }
   };
 

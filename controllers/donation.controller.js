@@ -14,7 +14,7 @@ exports.request = async (req, res, next) => {
   const user = await Users.findOne({_id : req.body.userId});
   logger.debug("Donation User", user);
 
-  const ngo = await NGOs.findOne({_id : req.body.ngoId})
+  const ngo = await NGOs.findOne({name : req.body.ngoName})
   logger.debug("Donation NGO", ngo);
 
   const donation = new Donation({

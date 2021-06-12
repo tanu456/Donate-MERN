@@ -15,7 +15,12 @@ class Card extends React.Component {
                 bulk of the card's content.
               </p>
               <NavLink
-                to="/donate"
+                to= {{
+                  pathname:"/donate",
+                  aboutProps:{
+                    ngoName: this.props.ngoName
+                  }
+                }}
                 className="btn btn-outline-success btn-get-started"
               >Donate Now</NavLink>
             </div>
