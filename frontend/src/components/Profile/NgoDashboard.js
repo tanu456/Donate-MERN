@@ -16,27 +16,27 @@ const NgoDashboard = () => {
           <li className="list-group-item d-flex imgList">
             <img src={ngoImage} className="ngoImg" alt="NGO Image" />
           </li>
-          <li className="list-group-item">
+          <li className="list-group-item d-flex btnList">
             <span className="badge bg-secondary mr-2">Name:</span>
             <span className="mr-4">abc xyz</span>
           </li>
-          <li className="list-group-item">
+          <li className="list-group-item d-flex btnList">
             <span className="badge bg-secondary mr-2">User Name:</span>
             <span className="mr-4">User Name</span>
           </li>
-          <li className="list-group-item">
+          <li className="list-group-item d-flex btnList">
             <span className="badge bg-secondary mr-2">E-mail:</span>
             <span className="mr-4">abc@gmail.com</span>
           </li>
-          <li className="list-group-item">
+          <li className="list-group-item d-flex btnList">
             <span className="badge bg-secondary mr-2">Phone No:</span>
             <span className="mr-4">+91 1234567890</span>
           </li>
-          <li className="list-group-item">
+          <li className="list-group-item d-flex btnList">
             <span className="badge bg-secondary mr-2">City:</span>
             <span className="mr-4">City</span>
           </li>
-          <li className="list-group-item">
+          <li className="list-group-item d-flex btnList">
             <span className="badge bg-secondary mr-2">
               Registeration Number:
             </span>
